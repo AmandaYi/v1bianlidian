@@ -1,0 +1,60 @@
+<ion-content style="background: #F2F2F2">
+  <section class="find">
+    <!--<div class="find_Location"  tappable (click)="LocationPage()">
+            <img src="assets/img/home_address_white@3x.png">
+            <p>东莞市</p>
+        </div>-->
+    <!-- <img src="assets/img/zuobian@3x.png" alt="" *ngIf="toparr.length==0"> -->
+    <div *ngIf="toparr.length!=0">
+      <div class="details_Carousel" *ngFor="let data of toparr">
+        <img [src]="data.mainpic" alt="" tappable (click)="huodong(data.actid)">
+      </div>
+    </div>
+
+    <!--<ion-slides class="details_Carousel">
+            <ion-slide *ngFor="let data of toparr">
+                <img [src]="data.mainpic" alt=""  tappable (click)="huodong(data.actid)">
+            </ion-slide>
+        </ion-slides>-->
+  </section>
+  <section class="find_theme">
+    <dl class="find_theme-tit">
+      <dt>为你精彩</dt>
+      <dd>最懂你的吃喝玩乐</dd>
+    </dl>
+    <!-- <img src="assets/img/zuobian@3x.png" alt="" *ngIf="activityarr.length==0"> -->
+    <div *ngIf="activityarr.length!=0">
+      <div class="find_eat" *ngFor="let lis of activityarr">
+        <div tappable (click)="SkipTheme(lis.actid)">
+          <img [src]="lis.mainpic" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <section class="Recommend_today">
+    <div class="Recommend_today-qu">
+      <img src="assets/img/zuobian@3x.png" alt="">
+      <p>今日推荐</p>
+      <img src="assets/img/youbian@3x.png" alt="">
+      <p tappable (click)="More()">更多</p>
+    </div>
+    <!-- <div class="Recommend_today-lis" *ngIf="recommendItems.length==0">
+      <img src="assets/img/zuobian@3x.png" alt="">
+    </div> -->
+    <div *ngIf="recommendItems.length!=0">
+      <div class="Recommend_today-lis" *ngFor="let data of recommendItems">
+        <div tappable (click)="SkipDetail(data.itemid)">
+          <img [src]="data.mainpic" alt="">
+          <h4>{{data.ctitle}}</h4>
+          <p>销售数{{data.saleNum}}</p>
+          <p>
+            <span *ngIf="data.aprice==null">￥{{data.sprice}}</span>
+            <span *ngIf="data.aprice!=null">￥{{data.aprice}}</span>
+            <span>￥{{data.price}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ion-content>

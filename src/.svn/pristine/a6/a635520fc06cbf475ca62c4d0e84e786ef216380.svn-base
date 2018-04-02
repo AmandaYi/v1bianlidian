@@ -1,0 +1,73 @@
+order-fulfillment {
+  // ion-header {
+  //   margin-top: 20px;
+  // }
+  .order-top {
+    padding: 1rem 1rem 0 1rem;
+    img {
+      padding-bottom: 1rem;
+      border-bottom: 1px #BFBFBF solid;
+    }
+  }
+  .order-cen {
+    margin: 1rem 1rem 0 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px #BFBFBF solid;
+    dl {
+      width: 100%;
+      padding-bottom: 6px;
+      dt {
+        width: 30%;
+        display: block;
+        text-align: right;
+        float: left;
+        font-size: 1.4rem;
+        color: #8B8B8B;
+      }
+      dd {
+        padding-left: 0.5rem;
+        width: 65%;
+        display: block;
+        float: left;
+        font-size: 1.4rem;
+        color: #353535;
+      }
+    }
+    dl:after {
+      /*最简方式*/
+      content: '...........';
+      display: block;
+      clear: both;
+      height: 0;
+      overflow: hidden;
+    }
+  }
+  .order-payment {
+    margin: 1rem 1rem 0 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px #BFBFBF solid;
+    p {
+      text-align: right;
+    }
+    .order-payment1 {
+      color: #4D4D4D;
+      font-size: 1.6rem;
+      b {
+        color: #D72227;
+      }
+    }
+    .order-payment2 {
+      margin-top: 0.3rem;
+      font-size: 1.4rem;
+      color: #BCBCBC;
+    }
+  }
+  .order-foot {
+    margin: 1rem;
+    text-align: center;
+    button {
+      width: 10rem;
+      display: inline-block;
+    }
+  }
+}

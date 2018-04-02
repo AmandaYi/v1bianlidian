@@ -1,0 +1,188 @@
+<!--<ion-header>
+    <ion-navbar>
+        <ion-title>六六超市</ion-title>
+    </ion-navbar>
+    <button ion-button icon-only (click)="goBack()">
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        11
+      </button>
+</ion-header>-->
+<ion-header>
+    <header class="home_top" [ngStyle]="{'height':isIos?'13rem':'12rem'}">
+        <div class="is-ios-toolsbar" *ngIf="isIos"></div>
+        <div class="home_top-img">
+            <div class="home_top-img1">
+                <div tappable (click)="LocationPage()">
+                    <img src="assets/img/home_address_white@3x.png" alt="">
+                    <p *ngIf="formattedAddress==null">您当前位置无法获取</p>
+                    <p *ngIf="formattedAddress!=null">{{formattedAddress}}</p>
+                </div>
+            </div>
+            <div class="home_top-img2">
+                <!--<ion-icon tappable name="appname-share" style="font-size: 3rem;color: #ffffff" tappable (click)="share()"></ion-icon>-->
+                <ion-icon tappable name="appname-heart" style="font-size: 3rem;color: #ffffff" tappable (click)="heart()" *ngIf="hasCollection==false"></ion-icon>
+                <ion-icon tappable name="appname-heartYellow" style="font-size: 3rem;color:#FEB402" tappable (click)="CancelColl()" *ngIf="hasCollection==true"></ion-icon>
+            </div>
+        </div>
+        <div class="home_top-log">
+            <div class="home_topd">
+                <img [src]="mainpic" alt="" class="home_top-img" *ngIf="mainpic!=null">
+                <img src="assets/img/chaoshi.png" alt="" class="home_top-img" *ngIf="mainpic==null">
+            </div>
+            <div class="Store_information">
+                <div class="store">
+                    <span tappable (click)="sc()">{{name}}</span>
+                    <ul class="Stars">
+                        <li *ngFor="let i of starNum" [class.sel]="i.a"></li>
+                    </ul>
+                </div>
+                <div class="information">
+                    <p>{{addr}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="notice" (click)="asdf()">
+            <img src="assets/img/home_radio@3x.png" alt="">
+            <span>{{mes}}</span>
+        </div>
+    </header>
+    <section class="home_sect">
+        <div class="home_div" tappable (click)="Search()">
+            <img src="assets/img/home_search_gry@3x.png" alt="">
+            <span>搜索商品</span>
+        </div>
+        <!--<ion-searchbar class="home_retrieval" placeholder="搜索商品"  tappable (click)="Search()"></ion-searchbar>-->
+        <!--<div class="home_sort"  tappable (click)="Press()" #divt>热销</div>
+        <div class="Small_triangle">▼</div>-->
+    </section>
+</ion-header>
+<ion-content style="overflow: hidden;padding-bottom:4rem;box-sizing: border-box;position: relative;">
+
+    <!--、、、、、、、、、、、、、、、、、、、、、、、、、-->
+
+    <section class="home_whole count-main">
+        <div style="position: fixed;top:0;left:0;width:100%;height:100%;background: #000;z-index: 2;opacity: 0.5;" *ngIf="updown"></div>
+        <!--<div class="drop_down" *ngIf="updown">
+            <div class="drop_down-triangle"></div>
+            <div class="drop_down-menu">
+                <p  tappable (click)="Pre(divt,'新品')">新品</p>
+                <p  tappable (click)="Pre(divt,'热销')">热销</p>
+                <p  tappable (click)="Pre(divt,'特价')">特价</p>
+            </div>
+        </div>-->
+        <div class="l-flex-row l-full">
+            <section class="home_Supermarket l-flex-column">
+                <div class="fixed-leftBar">
+                    <div *ngIf="categoryItem!=''">
+                        <ion-list class="home_Middle" *ngFor="let lis of categoryItem">
+
+                            <div class="home_Middle-d" tappable (click)="Supermarket(lis)" [class.lt_res]="lis.code==codes">{{lis.name}}</div>
+                            <ul class="home_Middle-u" *ngIf="lis.code == selectedCategory">
+                                <li *ngFor="let data of lis.items" tappable (click)="Supermarsel(data)" [class.li_back]="data.code==Supermar">
+                                    <p [class.li_res]="data.code==Supermar">{{data.name}}</p>
+                                </li>
+                            </ul>
+                        </ion-list>
+                    </div>
+                    <div *ngIf="categoryItem==''">
+                        <p style="font-size: 1.4rem;text-align: center;">暂无数据</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home_Kitchen l-flex-1 l-flex-column">
+                <ion-list class="home_commodity">
+                    <div class="coupon" *ngIf="couponNum>0?'true':'flase'">
+                        <div class="coupon-left">
+                            <span>{{couponNum}}张优惠券</span>
+                            <span>折扣，满减</span>
+                        </div>
+
+                        <div><button type="" tappable (click)='getCoupon();'>领券</button></div>
+                    </div>
+                    <div *ngIf="content!=null">
+                        <div *ngFor="let lis of content;let i=index">
+                            <ion-item *ngIf="lis.stocknum!=0">
+                                <!--*ngIf="lis.stocknum!=0" 限制库存的-->
+                                <ion-thumbnail item-left tappable (click)="commodityDetails(lis.itemid)">
+                                    <img *ngIf="lis.mainpic!=null" [src]="lis.mainpic">
+                                    <img *ngIf="lis.mainpic==null" src="assets/img/my_photo_thedefaulf@3x.png">
+                                </ion-thumbnail>
+                                <div class="home_nr">
+                                    <h2 tappable (click)="commodityDetails(lis.itemid)">{{lis.ctitle}}</h2>
+                                    <p class="home-price2" *ngIf="lis.price!=lis.sprice">{{lis.price}}</p>
+                                    <p class="home-price" *ngIf="lis.aprice==null">￥{{lis.sprice}}</p>
+                                    <p class="home-price" *ngIf="lis.aprice!=null">￥{{lis.aprice}}<b>活动价</b></p>
+                                    <div class="home_j">
+                                        <ion-icon tappable name="add-circle" (tap)="jia(i,lis.itemid)" class="home_j-ion1"></ion-icon>
+                                        <span class="home_j-num">
+                                  <ul>
+                                      <li>{{lis.count}}</li>
+                                  </ul> 
+                                </span>
+                                        <ion-icon tappable name="remove-circle" (tap)="jian(i,lis.itemid)" class="home_j-ion2"></ion-icon>
+                                    </div>
+                                </div>
+                            </ion-item>
+                            <ion-item *ngIf="lis.stocknum==0">
+                                <ion-thumbnail item-left tappable (click)="Soldout()">
+                                    <img *ngIf="lis.mainpic!=null" [src]="lis.mainpic">
+                                    <img *ngIf="lis.mainpic==null" src="assets/img/my_photo_thedefaulf@3x.png">
+                                </ion-thumbnail>
+                                <h2 tappable (click)="Soldout()">{{lis.ctitle}}</h2>
+                                <p class="home-price2" *ngIf="lis.price!=lis.sprice">{{lis.price}}</p>
+                                <p class="home-price" *ngIf="lis.aprice==null">￥{{lis.sprice}}</p>
+                                <p class="home-price" *ngIf="lis.aprice!=null">￥{{lis.aprice}}<b>活动价</b></p>
+                                <div class="home_j">
+                                    <p style="font-size: 1.4rem;text-align: center;">商品售空</p>
+                                </div>
+                            </ion-item>
+                        </div>
+                    </div>
+                    <div *ngIf="content==null">
+                        <p style="font-size: 1.4rem;text-align: center;">暂无商品</p>
+                    </div>
+
+                    <!--<div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>-->
+                    <ion-infinite-scroll (ionInfinite)="doInfiniteShop($event)">
+                        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
+
+                </ion-list>
+            </section>
+        </div>
+    </section>
+    <!--、、、、、、、、、、、、、、、、、、、、、、、、、-->
+
+</ion-content>
+<!--<div class="Bullet_Sharing" *ngIf="WCshare==true">
+    <img src="assets/img/pengyouquan.png" alt=""  tappable (click)="circle()">
+    <img src="assets/img/weixin2.png" alt=""  tappable (click)="friends()">
+</div>-->
+<ion-footer>
+    <footer class="ShoppingCart">
+        <div class="ShoppingCart_l" tappable (click)="ShoppingCart()">
+            <div class="ocart">
+                <div class="divimg">
+                    <img class="img1" src="assets/img/home_shop_gry@3x.png" *ngIf="!totalCount">
+                    <img class="img2" src="assets/img/home_shop_yellow@3x.png" *ngIf="totalCount">
+                    <div class="allnum" id="allnum" *ngIf="totalCount">{{totalCount}}</div>
+                </div>
+
+                <div class="Cart">
+                    <p *ngIf="!totalCount">购物车是空的</p>
+                    <div id="tPrice" *ngIf="totalCount">
+                        <b>￥{{totalPrice}}<span></span></b>
+                        <!--<small *ngIf="distributePrice">满{{distributePrice}}元，免邮费</small>-->
+                        <small *ngIf="distributeDuration">{{distributeDuration}}公里内，免配送</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ShoppingCart_r" tappable (click)="openConfirmOrder()" [class.cartdiv]="totalCount>=1">
+            <span>去结算</span>
+        </div>
+    </footer>
+    <navi-map></navi-map>
+</ion-footer>

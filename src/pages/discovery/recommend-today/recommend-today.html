@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      今日推荐
+    </ion-title>
+  </ion-navbar>
+  <section class="Theme_Street">
+    <div class="Theme_Street-volume">
+      <div tappable (click)="default()">
+        <p>默认</p>
+      </div>
+      <div tappable (click)="SorttRiangle(1)">
+        <p>销售</p>
+        <div class="triangle">
+          <div class="Upper_triangle" [class.active]="sortt1 == 0"></div>
+          <div class="Lower_triangle" [class.active]="sortt1 == 1"></div>
+        </div>
+      </div>
+      <div tappable (click)="SorttRiangle(2)">
+        <p>价格</p>
+        <div class="triangle">
+          <div class="Upper_triangle" [class.active]="sortt2 == 0"></div>
+          <div class="Lower_triangle" [class.active]="sortt2 == 1"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--<ion-list>
+            <ion-item *ngFor="let item of items"></ion-item>
+        </ion-list>
+
+        <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>-->
+
+  </section>
+</ion-header>
+
+<ion-content style="background: #F2F2F2">
+
+  <section class="Recommend_today">
+    <div class="Recommend_today-lis" *ngFor="let data of content">
+      <div tappable (click)="SkipDetail(data.itemid)">
+        <img [src]="data.mainpic" alt="">
+        <h4>{{data.ctitle}}</h4>
+        <p>销售数{{data.saleNum}}</p>
+        <p>
+          <span *ngIf="data.aprice==undefined">￥{{data.sprice}}</span>
+          <span *ngIf="data.aprice!=undefined">￥{{data.aprice}}</span>
+          <span>￥{{data.price}}</span>
+        </p>
+      </div>
+
+    </div>
+    <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+    <ion-infinite-scroll (ionInfinite)="doInfiniteShop($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </section>
+</ion-content>

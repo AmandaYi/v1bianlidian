@@ -1,0 +1,110 @@
+<ion-content class="content-bg">
+
+  <div class="user-info-box">
+    <div class="is-ios-toolsbar" *ngIf="isIos"></div>
+    <!--<div class="userMsg" tappable (click)="goToMessagePage();" [ngStyle]="{'top':isIos?'16px':'0'}">
+      <img src="assets/img/my_news@3x.png" />
+    </div>-->
+    <dl>
+      <!--(click)="goToMyinfoPage()"-->
+      <dt tappable >
+        <img [src]="headimgurl" />
+        <!--<img src="assets/img/my_photo_thedefaulf@3x.png" />-->
+      </dt>
+      <dd *ngIf="wxLogin">
+        <span>{{nickname}}</span>
+      </dd>
+      <dd *ngIf="inLogin">
+        <span>{{nickname}}</span>
+      </dd>
+      <dd tappable (click)="goToLoginPage()" *ngIf="onLogin">
+        未登录
+      </dd>
+      <!--<dd tappable (click)="goToMyinfoPage()">
+        账号信息
+      </dd>-->
+    </dl>
+
+    <!--<button ion-button round  swipeBackEnabled="true">登录2</button>-->
+  </div>
+
+  <div class="bookList">
+    <dl>
+      <dd tappable (click)="goToMybookingPage(0);">
+        <div>
+          <img src="assets/img/my_myorder_payfor@3x.png" />
+          <span *ngIf="DaiFuKuanTotal>0">{{DaiFuKuanTotal}}</span>
+        </div>
+        <p>待付款</p>
+      </dd>
+      <dd tappable (click)="goToMybookingPage(1);">
+        <div>
+          <img src="assets/img/my_myorder_delivery@3x.png" />
+          <span *ngIf="DaiShouKuanTotal>0">{{DaiShouKuanTotal}}</span>
+        </div>
+        <p>待收货</p>
+      </dd>
+      <dd tappable (click)="goToMybookingPage(2);">
+        <div>
+          <img src="assets/img/my_myorder_finish@3x.png" />
+          <span *ngIf="DaiPenJaiTotal>0">{{DaiPenJaiTotal}}</span>
+        </div>
+        <p>待评价</p>
+      </dd>
+      <!-- <dd tappable (click)="goToMybookingPage(3);">
+        <div>
+          <img src="assets/img/my_myorder_aftersales@3x.png" />
+          <span *ngIf="ShouHouTotal>0">{{ShouHouTotal}}</span>
+        </div>
+        <p>退款/售后</p>
+      </dd> -->
+      <dd tappable (click)="goToMybookingPage(3);">
+        <div>
+          <img src="assets/img/my_all@3x.png" />
+        </div>
+        <p>全部订单</p>
+      </dd>
+    </dl>
+  </div>
+  <div class="otherList">
+    <ion-list>
+      <!--<button ion-item icon-left>
+      <i><img src="../assets/img/my_balance@3x.png" /></i>
+      余额
+      <span color="lightdark">正在开发中</span>
+      </button>-->
+      <button ion-item tappable (click)="goToCouponPage()" icon-left>
+      <i><img src="assets/img/my_coupon@3x.png" /></i>
+      优惠券
+      <span color="lightdark">{{couponCount}}</span>
+      </button>
+      <!--<button ion-item icon-left  tappable (click)="showAlert()">
+      <i><img src="../assets/img/my_integral@3x.png" /></i>
+      积分
+      <span color="lightdark">正在开发中</span>
+      </button>-->
+    </ion-list>
+
+    <ion-list>
+      <button ion-item tappable (click)="goToFavoritesPage()" icon-left>
+      <i><img src="assets/img/my_collection@3x.png" /></i>
+      收藏
+      </button>
+      <button ion-item tappable (click)="goToShippingaddressPage()" icon-left>
+      <i><img src="assets/img/my_address@3x.png" /></i>
+      收货地址
+      </button>
+    </ion-list>
+
+    <ion-list>
+      <button ion-item tappable (click)="goToSuggestionsPage()" icon-left>
+      <i><img src="assets/img/my_proposal@3x.png" /></i>
+      投诉建议
+      </button>
+      <button ion-item tappable (click)="goToAboutusPage()" icon-left>
+      <i><img src="assets/img/my_about@3x.png" /></i>
+      关于我们
+      </button>
+    </ion-list>
+  </div>
+</ion-content>

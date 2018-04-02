@@ -1,0 +1,34 @@
+<!--<ion-header>
+
+    <ion-navbar>
+        <ion-title>启动页面</ion-title>
+    </ion-navbar>
+
+</ion-header>-->
+
+
+<ion-content>
+  <ion-slides pager>
+
+    <ion-slide>
+      <img src="assets/img/Bootpage1.png" />
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/Bootpage2.png" />
+    </ion-slide>
+
+    <ion-slide>
+
+      <img src="assets/img/Bootpage3.png" />
+
+
+      <div class="open_life">
+        <img src="assets/img/kaiqi.png" alt="" class="openLife6m" tappable (click)="goToHome()">
+        <!--<button light  class="openLife6m">开启六沐生活</button>-->
+      </div>
+
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

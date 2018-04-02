@@ -1,0 +1,222 @@
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { Ajax } from '../../../app/ajax';
+import { CommodityDetails } from '../commodity-details/commodity-details';
+import { AppConfig } from '../../../app/app.config';
+import 'rxjs/add/operator/toPromise';
+import { AppGlobal } from "../../../AppGlobal";
+import { Variable } from "../../../global/variable";
+@Component({
+  selector: 'search-bar',
+  templateUrl: 'search.html'
+})
+export class SearchPage {
+  constructor(
+    public navCtrl: NavController,
+    public params: NavParams,
+    private ajax: Ajax,
+    public appGlobal: AppGlobal
+  ) {
+    this.initializeItems();
+    this.initOrder();
+  }
+  orderInfo: { orderId: any, docs: any, orderState: any, orderTime: any, tSum: any, tPrice: any };
+  typ: { typInfo: any, sum: any, tPrice: any };
+  // 搜索框
+  searchQuery: string = '';
+  items: string[];
+  //   双向绑定值
+  myInput: string = "";
+  contents: string;
+  initializeItems() {
+    this.items = [
+    ];
+  }
+
+  totalCount: number;// 总数量
+  totalPrice: number; // 总价格
+  docslis: any[];// 遍历的数组
+  result = new Set([]);// 字符串截取的价格
+  arrts = new Set([]);//数据
+  existence: number = 2;// 判断检索的商品是否存在
+  // 遍历CategoryDetails_1
+  initOrder() {
+    let arr = this.arrts;
+    this.orderInfo = { orderId: "000000", orderState: "open", orderTime: "2017-03-01 08:12:23", docs: arr, tSum: 0, tPrice: 0.00 };
+  }
+  // ionViewWillEnter() {
+  //   var tokenId = localStorage.getItem('tokenId');
+  //   if (tokenId) {
+  //     // 购物车数量
+  //     this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId })
+  //       .toPromise()
+  //       //在 promise 的then回调中，我们调用 HTTP 的Reponse对象的json方法，以提取出其中的数据
+  //       .then(response => {
+  //         var data = response.json().data;
+  //         console.log(data)
+  //         if (data) {
+  //           this.totalCount = data.totalCount || 0;
+  //           this.totalPrice = data.totalPrice || 0;
+  //         }
+  //       })
+  //   }
+  // }
+  // 检索事件
+  Search() {
+    this.appGlobal.oNclose(500);
+    return this.ajax.post(AppConfig.getDebugUrl + '/api/shop/search/searchproduct/search', { querykey: this.myInput ,shopId:Variable.getInstance().shopid})
+      .toPromise()
+      .then(response => {
+        response.json().data;
+        if (response.json().code == 200) {
+          this.docslis = response.json().data.docs;
+          if (this.docslis.length == 0) {
+            this.existence = 1;
+          } else if (this.docslis.length > 0) {
+            this.existence = 2;
+          }
+
+          for (let i = 0; i < response.json().data.docs.length; i++) {
+            this.typ = { typInfo: this.docslis[i], sum: 0, tPrice: 0.00 };
+            this.arrts.add(this.typ);
+          }
+        }
+      })
+  }
+  onSearchKeyUp(event){
+    if("Enter"==event.key){
+     //function
+     this.searchBt()
+    }
+  }
+  search:string;
+  searchBt(){
+    this.appGlobal.oNclose(500);
+    return this.ajax.post(AppConfig.getDebugUrl + '/api/shop/search/searchproduct/search', { querykey: this.search ,shopId:Variable.getInstance().shopid})
+      .toPromise()
+      .then(response => {
+        response.json().data;
+        if (response.json().code == 200) {
+          this.docslis = response.json().data.docs;
+          if (this.docslis.length == 0) {
+            this.existence = 1;
+          } else if (this.docslis.length > 0) {
+            this.existence = 2;
+          }
+
+          for (let i = 0; i < response.json().data.docs.length; i++) {
+            this.typ = { typInfo: this.docslis[i], sum: 0, tPrice: 0.00 };
+            this.arrts.add(this.typ);
+          }
+        }
+      })
+  }
+
+  getItems(ev: any) {
+    this.initializeItems();
+    let val = ev.target.value;
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
+  details(lisdocid) {  // 跳商品详情
+    this.navCtrl.push(CommodityDetails, { itemid: lisdocid });
+  }
+  plus(e, docid) {// 按钮加
+    setTimeout(this.changeOrder(docid, "add"), 500);
+    // var tokenId = localStorage.getItem('tokenId');
+    this.totalCount += 1;
+    // this.changeOrder(pid, "add");
+    // if(tokenId){
+    //   this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add', { itemid: item, productQty: 1, tokenid: tokenId })
+    //   .toPromise()
+    //   //在 promise 的then回调中，我们调用 HTTP 的Reponse对象的json方法，以提取出其中的数据
+    //   .then(response => {
+    //     response.json().data;
+    //     console.log(response.json());
+    //     if (response.json().code == 200) {
+    //       // 购物车数量
+    //       this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId })
+    //         .toPromise()
+    //         //在 promise 的then回调中，我们调用 HTTP 的Reponse对象的json方法，以提取出其中的数据
+    //         .then(response => {
+    //           var data = response.json().data;
+    //           if (data) {
+    //             this.totalCount = data.totalCount || 0;
+    //             this.totalPrice = data.totalPrice || 0;
+    //           }
+    //         })
+    //     } else {
+    //       alert(response.json().message)
+    //     }
+    //   })
+    // }else{
+    //   alert("你还没有登录")
+    // }
+  }
+  // 按钮减
+  reduce(docid) {
+    this.changeOrder(docid, "remove");
+    // var tokenId = localStorage.getItem('tokenId');
+    this.totalCount -= 1;
+    // this.changeOrder(pid, "remove");
+    // if(tokenId){
+    //   if (this.totalCount > 0) {
+    //   this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add?method=decrease', { itemid: item, productQty: 1, tokenid: tokenId })
+    //     .toPromise()
+    //     //在 promise 的then回调中，我们调用 HTTP 的Reponse对象的json方法，以提取出其中的数据
+    //     .then(response => {
+    //       response.json().data;
+    //       console.log(response.json());
+    //       this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId })
+    //         .toPromise()
+    //         //在 promise 的then回调中，我们调用 HTTP 的Reponse对象的json方法，以提取出其中的数据
+    //         .then(response => {
+    //           var data = response.json().data;
+    //           if (data) {
+    //             this.totalCount = data.totalCount || 0;
+    //             this.totalPrice = data.totalPrice || 0;
+
+    //           }
+    //         })
+    //     })
+    // } else {
+    //   this.totalCount = 0;
+    // }
+    // }else{
+    //   alert("你还没有登录")
+    // }
+  }
+  // orderInfo: { orderId: any, docs: any, orderState: any, orderTime: any, tSum: any, tPrice: any };
+  // typ: { typInfo: any, sum: any, tPrice: any };
+  changeOrder(docid, method) {
+    let tSum = 0;
+    let tPrice = 0.00;
+    for (let i = 0; i < this.orderInfo.docs.length; i++) {
+      if (this.orderInfo.docs[i].typInfo.docid == docid) {
+        if (method == "add") {
+          this.orderInfo.docs[i].sum = this.orderInfo.docs[i].sum + 1;
+        }
+        if (method == "remove" && this.orderInfo.docs[i].sum > 0) {
+          this.orderInfo.docs[i].sum = this.orderInfo.docs[i].sum - 1;
+        }
+        this.orderInfo.docs[i].prices = this.orderInfo.docs[i].sum * this.orderInfo.docs[i].typInfo.sprice;
+        this.orderInfo.docs[i].prices = parseFloat(this.orderInfo.docs[i].prices.toFixed(2));
+      }
+      tSum = tSum + this.orderInfo.docs[i].sum;
+      tPrice = tPrice + this.orderInfo.docs[i].prices;
+    }
+    this.orderInfo.tSum = tSum;
+    this.orderInfo.tPrice = parseFloat(tPrice.toFixed(2));
+  }
+  ionViewWillEnter(){
+    this.hided()
+  }
+
+  hided(){//触发首页隐藏
+    let hid=0;
+    <any>window.parent.postMessage(hid, "*");
+  }
+}

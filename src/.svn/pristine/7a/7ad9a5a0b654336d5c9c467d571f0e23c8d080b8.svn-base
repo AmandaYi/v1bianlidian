@@ -1,0 +1,19 @@
+<ion-content padding class="jiushi">
+  <div class="Bulletin">
+    <div class="Bulletinimg">
+      <img src="./assets/img/beijin.png" alt="">
+    </div>
+    <div class="del" (click)="know()">
+      <img alt="" class="close" src="./assets/img/close_128px.png" tappable="">
+    </div>
+    <div class="Bulletintxt">
+      <h3>尊敬的六沐卡盟用户：</h3>
+      <span>&nbsp;你好，为了能带给广大卡盟用户更加优质的服务体验，我们正在对系统内各应用版块进行优化和完善，以保证数据的安全性、准确性。
+   故近期系统内各应用版块除注册、绑卡功能和六沐商城版块可正常使用外，其余版块(六沐便利店、卡券商城、商家联盟)在优化阶段，暂时无法提供服务。
+   各功能版块可正式使用的时间以系统公告为准，给你带来的不便敬请谅解！</span>
+      <p>东莞市六沐超市管理有限公司</p>
+      <p>2018年2月6日</p>
+    </div>
+    <div class="know" (click)="know()">我知道了</div>
+  </div>
+</ion-content>

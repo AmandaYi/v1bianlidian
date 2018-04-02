@@ -1,0 +1,172 @@
+loca-tion {
+  // .star {
+  //   margin-top: 20px;
+  // }
+  .cits {
+    width: 100%;
+    background: #ffffff;
+    overflow: hidden;
+    padding: 3%;
+    // margin-top: 15px;
+    .cits-weizhi {
+      img {
+        width: 2.4rem;
+        box-sizing: content-box;
+        float: left;
+      }
+      p {
+        font-size: 1.5rem;
+        float: left;
+        line-height: 2.5rem;
+        font-weight: 900;
+      }
+    }
+    .cits-locat {
+      img {
+        margin-left: 10rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: inline-block;
+      }
+      span {
+        display: inline-block;
+        font-size: 1.6rem;
+        color: #4A90E2;
+        position: relative;
+        bottom: 0.5rem;
+      }
+    }
+  }
+  .Distribution{
+    margin-top: 10px;
+    width: 100%;
+    background: #ffffff;
+    overflow: hidden;
+    padding: 3%;
+    text-align: center;
+    span{
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+  }
+  .citys {
+    width: 100%;
+    background: #ffffff;
+    overflow: hidden;
+    padding: 12px;
+    .citys-locat {
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: inline-block;
+        margin-left: 30%;
+      }
+      span {
+        display: inline-block;
+        font-size: 1.6rem;
+        color: #4A90E2;
+      }
+    }
+  }
+  .citys-inf {
+    width: 100%;
+    margin-top: 5%;
+    overflow: hidden;
+    background: #ffffff;
+    div:nth-child(1) {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #8B8B8B;
+      border-bottom: 0.55px solid rgba(0, 0, 0, 0.05);
+      padding: 3%;
+    }
+    button {
+      margin: 0.5rem 1em;
+    }
+  }
+  .urban_district {
+    width: 100%;
+    margin-top: 5%;
+    overflow: hidden;
+    background: #ffffff;
+    div:nth-child(1) {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #8B8B8B;
+      border-bottom: 0.55px solid rgba(0, 0, 0, 0.05);
+      padding: 3%;
+    }
+    button {
+      margin: 0.5rem 1em;
+      float: left;
+    }
+    .but_color {
+      color: #222;
+    }
+  }
+  .Supermarket {
+    width: 100%;
+    margin-top: 5%;
+    overflow: hidden;
+    background: #ffffff;
+    ion-thumbnail[item-left] {
+      margin-right: 8px;
+      img {
+        width: 6rem;
+        height: auto;
+      }
+    }
+    .item-ios {
+      padding-left: 0;
+      padding: 0 12px;
+      border-bottom: 1px dotted #ccc;
+    }
+    .label-ios {
+      margin-right: 0;
+    }
+    .nearby {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #8B8B8B;
+      border-bottom: 0.55px solid rgba(0, 0, 0, 0.05);
+      padding: 12px;
+    }
+    .shop {
+      dt {
+        margin: 0;
+        padding: 0;
+        width: 70%;
+        display: block;
+        float: left;
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+      dd {
+        margin: 0;
+        padding: 0;
+        width: 30%;
+        display: block;
+        float: right;
+        font-size: 1.4rem;
+        text-align: right;
+      }
+    }
+    dl:after {
+      /*最简方式*/
+      content: '...........';
+      display: block;
+      clear: both;
+      height: 0;
+      overflow: hidden;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    .weizhi {
+      margin: 2rem;
+      font-size: 1.5rem;
+      color: red;
+      text-align: center;
+    }
+  }
+}

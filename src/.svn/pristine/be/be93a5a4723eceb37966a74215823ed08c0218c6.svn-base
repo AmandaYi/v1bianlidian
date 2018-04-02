@@ -1,0 +1,625 @@
+import { Component } from '@angular/core';
+import { Ajax } from '../../app/ajax';
+import { NavController, ToastController, ModalController, NavParams, ViewController } from 'ionic-angular';
+import { OrderSubmission } from './order-submission/order-submission';
+import { CommodityDetails } from './commodity-details/commodity-details';
+import { CouponPage } from './coupon/coupon';
+import { SharePage } from './share/share';
+import { ShoppingCart } from './shopping-cart/shopping-cart';
+import { LocationPage } from './location/location';
+import { SearchPage } from './search/search';
+import { AppConfig } from '../../app/app.config';
+import { Variable } from '../../global/variable';
+import { AppGlobal } from "../../AppGlobal";
+import { LoginPage } from "../login/login";
+import { JSEncrypt } from "./bin/jsencrypt"
+import { SystemBulletin } from "./system-bulletin/systembulletin";
+import { IsPlarform } from "./../../providers/contant";
+
+declare var AMap;
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+
+export class HomePage {
+  updown: boolean = false;
+  cont: any = "";
+  starNum: any = [];//星星数组
+  codes: number;
+  categoryItem: any[];  // 类别项目
+  storeItem: string;  // 存储项目
+  shop: number;  // 店铺id
+  content: any[];  // 商品列表
+  totalCount: number;  // 总数量
+  totalPrice: number;  // 总价格
+  selectedCategory: number;  // code判断
+  score: number;  // 星星
+  name: string;  // 店铺名
+  addr: string;  // 地址
+  hasCollection: boolean;  // 有无收藏
+  Ait = new Set([]);  // 商品数组
+  Aqt = new Set([]);  // 数量数组
+  mes: string;  // 公告信息
+  distributeDuration: number;  // 配送距离
+  distributePrice: number;  // 配送价格
+  mainpic: string  // 店铺图片
+  arr = new Set([]);
+  a1: Array<boolean> = [];
+  Supermar: number;    // 样式判断
+  carGoodsIdNum: any = [];//存放购物车商品数量和ID
+  carPile: any = [];//存放购物车
+  a: any = { num: 1 };
+  couponArr: any = [];//优惠券数组
+  couponNum: number;//优惠券数量
+  newData: any;
+  isLogin: any;
+  pipeiID: any = []//领取过优惠券的ID数组
+  formattedAddress: string;
+  Locationcity: string;
+  // 云图数据范围检索的
+  Cloud: any;
+  CloudInf: any;
+  mess: any;
+
+
+  prodPage: number = 0;//商品页码
+  // dixian: number = 0;//我也有底线
+  totalPages: number;//总页数
+
+  userCode: any;  //用户标示
+  token: any; //用户密钥
+  userAgent: string;
+
+  //判断ios
+  isIos: boolean = Variable.getInstance().isIos;
+
+  shuj: number = 0;
+  search: any;
+
+  test: string;
+  map: any;//地图对象
+  constructor(
+    public navCtrl: NavController,
+    public toastCtrl: ToastController,
+    public modalCtrl: ModalController,
+    private ajax: Ajax,
+    public params: NavParams,
+    public appGlobal: AppGlobal,
+    public veiwCtrl: ViewController,
+  ) {
+    this.userAgent = localStorage.getItem('userAgent');
+    this.appGlobal.oNclose(1000);
+    // 公告信息
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/info/contContent/notice', { shopId: Variable.getInstance().shopid })
+      .toPromise()
+      .then(response => {
+        if (response.json().code == 200) {
+          this.mes = response.json().message
+        }
+      })
+  }
+
+  ngOnInit() {
+    let modal = this.modalCtrl.create(SystemBulletin)
+    modal.present();
+    this.Cloud = JSON.parse(localStorage.getItem('Cloud'))
+    if (Variable.getInstance().Visit == true) {
+      // setTimeout(() => {
+      //   if (Variable.getInstance().Lately == 0) {
+      //     if (this.mess != undefined && this.mess.datas != undefined) {
+      //       // 云图数据范围检索的
+      //       Variable.getInstance().shopid = this.mess.datas[0].shopid;
+      //     } else {
+      //       this.navCtrl.push(LocationPage)
+      //     }
+      //   }
+      // }, 2000);
+      Variable.getInstance().Visit = false;
+    } else if (Variable.getInstance().Visit == false) {
+      return;
+    }
+
+    if (!IsPlarform) {
+      this.Receive()
+    }
+  
+
+  }
+  asdf() {
+    let modal = this.modalCtrl.create(SystemBulletin)
+    modal.present();
+  }
+
+  //定位出发器
+  login() {
+    // if (Variable.getInstance().formattedAddress != '' && Variable.getInstance().formattedAddress != undefined) {
+    //   this.formattedAddress = Variable.getInstance().formattedAddress;
+    // }
+    if (localStorage.getItem('formattedAddress') != null && localStorage.getItem('formattedAddress') != undefined) {
+      this.formattedAddress = localStorage.getItem('formattedAddress');
+    }
+    this.Locationcity = Variable.getInstance().Locationcity;
+  }
+
+  Press() {// 刷新切换
+    this.updown = !this.updown;
+  };
+
+  Pre(divt: any, cont: string) {// 子品种
+    this.updown = !this.updown;
+    divt.textContent = cont;
+  }
+
+  Supermarket(category) { // 一级菜单单击事件
+    this.codes = category.code;
+    this.selectedCategory = category.code;
+    if (this.selectedCategory = category.code) {
+      this.Supermar = category.items[0].code;
+      this.getGoods(this.Supermar)
+    }
+  };
+
+  Supermarsel(data) { // 二级菜单点击事件
+    this.getGoods(data.code);
+    this.Supermar = data.code;
+  }
+  getGoods(code) {// 首页商品列表
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/home/list/' + Variable.getInstance().shopid + '?code=' + code)
+      .toPromise()
+      .then(response => {
+        if (response.json().code == 200) {
+          this.content = response.json().data.content;
+          this.totalPages = response.json().data.totalPages;
+          for (let i = 0; i < this.content.length; i++) {
+            for (let n = 0; n < this.carGoodsIdNum.length; n++) {
+              if (this.content[i].itemid == this.carGoodsIdNum[n].id) {
+                this.content[i].count = this.carGoodsIdNum[n].num;
+              }
+            }
+          }
+        } else {
+          this.appGlobal.showToast('数据异常！', 2000);
+        }
+      })
+
+  }
+  reqCoupon() {//一进入页面自动获取优惠券ID和会员领取过的ID
+    var tokenId = localStorage.getItem('tokenId');
+    // var tokenId = Variable.getInstance().tokenId;
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/couponActivity/couponActivityListByPassId', { tokenId: tokenId, page: 1, size: 10, userAgent: this.userAgent })
+      .toPromise()
+      .then(response => {
+        this.pipeiID = response.json().content
+
+        this.ajax.get(AppConfig.getDebugUrl + '/api/shop/couponActivity/couponActivityList', { page: 1, size: 10 })
+          .toPromise()
+          .then(response => {
+            this.couponArr = response.json().content
+            this.couponNum = this.couponArr.length;
+            for (let i in this.couponArr) {
+              for (let n in this.pipeiID) {
+                if (this.couponArr[i].id === this.pipeiID[n].couponActivityId) {
+                  this.couponArr[i]["isGet"] = '已领取';
+                }
+              }
+            }
+
+          })
+      })
+  }
+
+  getCoupon() {//跳优惠券页面
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+    if (this.couponNum == 0) {
+      this.appGlobal.showToast('暂无优惠券', 2000)
+      return;
+    }
+    let modal = this.modalCtrl.create(CouponPage, { couponArr: this.couponArr, pd: 1 })
+    modal.present();
+  }
+  ionViewDidEnter() {
+    this.isLogin = localStorage.getItem('ifLogin');
+    // if (Variable.getInstance().formattedAddress != '' && Variable.getInstance().formattedAddress != undefined) {
+    //   this.formattedAddress = Variable.getInstance().formattedAddress;
+    // }
+    if (localStorage.getItem('formattedAddress') != null && localStorage.getItem('formattedAddress') != undefined) {
+      this.formattedAddress = localStorage.getItem('formattedAddress');
+    }
+
+  }
+  ionViewDidLoad() {//触发定时器操作
+    setTimeout(() => {
+      this.reqCoupon()//一进入页面获取优惠券信息
+    }, 1000)
+    if (localStorage.getItem('formattedAddress') == null && localStorage.getItem('formattedAddress') == undefined) {
+      setTimeout(() => {
+        this.login()
+      }, 2000);
+    }
+
+  }
+
+  ionViewWillEnter() {
+    this.PageRefresh()
+  }
+
+  PageRefresh() {//首页加载内容
+    this.carGoodsIdNum = [];//存放购物车商品数量和ID
+    this.carPile = [];//存放购物车
+    this.starNum = [];
+
+    var tokenId = localStorage.getItem('tokenId');
+    // var tokenId = Variable.getInstance().tokenId;
+    if (tokenId) {
+      // 配送条件
+      this.ajax.get(AppConfig.getDebugUrl + '/api/shop/info/contContent/distribute-condition', { shopId: Variable.getInstance().shopid })
+        .toPromise()
+        .then(response => {
+          if (response.json().code == 200) {
+            this.distributeDuration = response.json().data.distributeDistance;
+            this.distributePrice = response.json().data.distributePrice;
+            localStorage.setItem('dsDistance', response.json().data.distributeDistance);
+            localStorage.setItem('dsPrice', response.json().data.distributePrice);
+            localStorage.setItem('dsTime', response.json().data.distributeDuration);
+          }
+
+        })
+      // 首页商家信息
+      this.ajax.get(AppConfig.getDebugUrl + '/api/shop/home/product/' + Variable.getInstance().shopid, { tokenid: tokenId, userAgent: this.userAgent })
+        .toPromise()
+        .then(response => {
+          if (response.json().code == 200) {
+            this.categoryItem = response.json().categoryItem;
+            this.storeItem = response.json().storeItem;
+            this.shop = response.json().storeItem.shopid;
+            this.score = response.json().storeItem.score;
+            this.name = response.json().storeItem.name;
+            this.addr = response.json().storeItem.addr;
+            this.hasCollection = response.json().storeItem.hasCollection;
+            this.mainpic = response.json().storeItem.mainpic;
+            if (response.json().categoryItem.length > 0) {
+              this.selectedCategory = response.json().categoryItem[0].code;
+              this.codes = response.json().categoryItem[0].code;
+              this.Supermar = response.json().categoryItem[0].items[0].code;
+              this.getGoods(this.Supermar)
+            }
+            if (this.score) {
+              this.cSore()
+            }
+          } else {
+            this.appGlobal.showToast(response.json().message, 2000);
+          }
+
+        })
+      // 购物车数量
+      this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId, userAgent: this.userAgent })
+        .toPromise()
+        .then(response => {
+          var data = response.json().data;
+          if (data) {
+            this.totalCount = data.totalCount || 0;
+            this.totalPrice = this.appGlobal.returnFloat(data.totalPrice) || 0;
+          }
+        })
+      // 购物车列表 
+      this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/list', { shopid: Variable.getInstance().shopid, page: 0, size: 6, tokenid: tokenId, userAgent: this.userAgent })
+        .toPromise()
+        .then(response => {
+          for (let i = 0; i < response.json().rows.length; i++) {
+            this.carGoodsIdNum.push({ id: response.json().rows[i].prod.pid, num: response.json().rows[i].car.productQty })
+            this.carPile.push({
+              id: response.json().rows[i].prod.pid,
+              num: response.json().rows[i].car.productQty,
+              name: response.json().rows[i].prod.name,
+              title: response.json().rows[i].prod.ctitle,
+              sprice: response.json().rows[i].prod.sprice
+            })
+          }
+        })
+
+    } else {
+      // 首页商家信息
+      this.ajax.get(AppConfig.getDebugUrl + '/api/shop/home/product/' + Variable.getInstance().shopid)
+        .toPromise()
+        .then(response => {
+          if (response.json().code == 200) {
+            response.json().data;
+            this.categoryItem = response.json().categoryItem;
+            this.storeItem = response.json().storeItem;
+            this.shop = response.json().storeItem.shopid;
+            this.score = response.json().storeItem.score;
+            this.name = response.json().storeItem.name;
+            this.addr = response.json().storeItem.addr;
+            this.hasCollection = response.json().storeItem.hasCollection;
+            this.mainpic = response.json().storeItem.mainpic;
+            if (response.json().categoryItem.length) {
+              this.selectedCategory = response.json().categoryItem[0].code;
+              this.codes = response.json().categoryItem[0].code;
+              this.Supermar = response.json().categoryItem[0].items[0].code;
+              this.getGoods(this.Supermar)
+            }
+            if (this.score) {
+              this.cSore()
+            }
+          } else {
+            // this.appGlobal.showToast(response.json().message,2000);
+          }
+
+
+        })
+    }
+
+  }
+
+  doInfiniteShop(infiniteScroll) {
+    let pL: any;
+    this.prodPage++;
+    if (this.totalPages > 1) {
+      if (this.prodPage < this.totalPages) {
+
+        setTimeout(() => {
+          this.ajax.get(AppConfig.getDebugUrl + '/api/shop/home/list/' + Variable.getInstance().shopid + '-' + this.Supermar, { page: this.prodPage, size: 20, sort: 'upTime,desc' })
+            .toPromise()
+            .then(response => {
+              pL = response.json().data.content
+              for (let i = 0; i < pL.length; i++) {
+                this.content.push(pL[i]);
+              }
+            })
+          infiniteScroll.complete();
+
+        }, 1000);
+
+      } else {
+        infiniteScroll.complete();
+        // this.dixian = 1;
+      }
+    } else {
+      infiniteScroll.complete();
+      return;
+    }
+
+
+  }
+
+
+  cSore() {//遍历星星
+    if (this.score) {
+      for (let i = 0; i < 5; i++) {
+        this.starNum.push({ a: false })
+      }
+      for (let n = 0; n < this.score; n++) {
+        this.starNum[n].a = true;
+      }
+    }
+
+  }
+
+  jia(i, item) {//加按钮
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//2秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 500);
+    }
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+    var tokenId = localStorage.getItem('tokenId');
+    this.totalCount += 1;
+    this.content[i].count++;
+    if (tokenId) {
+      this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add', { itemid: item, productQty: 1, tokenid: tokenId, userAgent: this.userAgent })
+        .toPromise()
+        .then(response => {
+          response.json().data;
+          if (response.json().code == 200) {
+            // 购物车数量
+            this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId, userAgent: this.userAgent })
+              .toPromise()
+              .then(response => {
+                this.newData = response.json().data;
+                var data = response.json().data;
+                if (data) {
+                  this.totalCount = data.totalCount || 0;
+                  this.totalPrice = this.appGlobal.returnFloat(data.totalPrice) || 0;
+                }
+              })
+          } else {
+            alert(response.json().message)
+          }
+        })
+    }
+
+  }
+
+  jian(i, item) {// 按钮减
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//2秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 500);
+    }
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+    var tokenId = localStorage.getItem('tokenId');
+
+    this.content[i].count--;
+    if (this.content[i].count < 0) {
+      this.content[i].count = 0;
+      return;
+    }
+    if (tokenId) {
+      if (this.totalCount > 0) {
+        this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add?method=decrease', { itemid: item, productQty: 1, tokenid: tokenId, userAgent: this.userAgent })
+          .toPromise()
+          .then(response => {
+            response.json().data;
+            this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/shpocarinfo/' + Variable.getInstance().shopid, { tokenid: tokenId, userAgent: this.userAgent })
+              .toPromise()
+              .then(response => {
+                this.totalCount -= 1;
+                this.newData = response.json().data;
+                var data = response.json().data;
+                if (data) {
+                  this.totalCount = data.totalCount || 0;
+                  this.totalPrice = this.appGlobal.returnFloat(data.totalPrice) || 0;
+                }
+              })
+          })
+      }
+    }
+
+  }
+  Soldout() {
+    this.appGlobal.showToast("该商品以售完")
+  }
+
+  heart(data) {// 收藏按钮
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+    this.hasCollection = true;
+    var tokenId = localStorage.getItem('tokenId');
+    var shops = this.shop;
+    // 收藏
+    this.ajax.post(AppConfig.getDebugUrl + '/api/shop/collection/favorite/', { bids: shops, type: 'shop', tokenid: tokenId, userAgent: this.userAgent })
+      .toPromise()
+      .then(response => {
+        this.toastCtrl.create({
+          message: response.json().message,
+          duration: 1000,
+          position: 'top'
+        }).present();
+      })
+  }
+
+  CancelColl() {// 收藏按钮
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//4秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 4000);
+    }
+    this.hasCollection = false;
+    var tokenId = localStorage.getItem('tokenId');
+    var shops = this.shop;
+    // 取消收藏
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/collection/cancelcollect', { bid: shops, type: 'shop', tokenid: tokenId, userAgent: this.userAgent })
+      .toPromise()
+      .then(response => {
+        this.toastCtrl.create({
+          message: response.json().message,
+          duration: 1000,
+          position: 'top'
+        }).present();
+      })
+  }
+
+
+  // share() {// 分享
+  //   let modal = this.modalCtrl.create(SharePage, { mainpic: this.mainpic })
+  //   modal.present();
+  // }
+
+  Search(ev: any) { // 搜索框
+    this.navCtrl.push(SearchPage);
+  }
+
+  LocationPage() {// 跳定位
+    this.navCtrl.push(LocationPage);
+  }
+
+  commodityDetails(data) {//跳商品详情
+    this.navCtrl.push(CommodityDetails, { itemid: data });
+  }
+
+  ShoppingCart() {// 跳购物车
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+    this.navCtrl.push(ShoppingCart);
+  }
+
+
+  openConfirmOrder() {// 跳支付
+    if (this.isLogin == null || this.isLogin == '') {//未登录
+      // this.navCtrl.push(LoginPage);
+      this.appGlobal.showToast('授权失败请返回重新登陆', 2000)
+      return;
+    }
+
+    if (this.totalCount == 0) {
+      let toast = this.toastCtrl.create({
+        message: '购物车为空',
+        duration: 1000,
+        position: "middle"
+      });
+      toast.present(toast);
+    } else {
+      this.navCtrl.push(OrderSubmission, { carPile: this.carPile, carGoodsIdNum: this.carGoodsIdNum, newData: this.newData });
+      // this.navCtrl.push(OrderSubmission);
+    }
+  }
+
+  Receive() {
+    let a;
+    if (this.appGlobal.isAndroid() == true) {
+      a = 'android';
+    } else if (this.appGlobal.isIos() == true) {
+      a = 'ios';
+    }
+    this.search = window.location.search;//"?"号(CGI参数)之后的字符串.
+    let userToken = this.search.split('=')[1].split('&')[0];
+    let userCode = this.search.split('=')[2].split('&')[0];
+    let userAgent = this.search.split('=')[3].split('&')[0];
+    let mobileno = this.search.split('=')[6].split('&')[0];
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/msUser/lmCardLogin?userCode=' + userCode + '&userToken=' + userToken + '&userAgent=' + userAgent + '&mobile=' + mobileno)
+      .toPromise()
+      .then(response => {
+        if (response.json().resultCode == 200) {
+          localStorage.setItem('userId', response.json().data.passId);
+          localStorage.setItem('tokenId', response.json().data.tokenId);
+          localStorage.setItem('memberId', response.json().data.memberId);
+          localStorage.setItem('recordStatus', response.json().data.recordStatus);
+          localStorage.setItem('nickname', response.json().data.nickname);
+          localStorage.setItem('headimgurl', response.json().data.avatarpath);
+          localStorage.setItem('ifLogin', '200');
+        }
+      })
+    localStorage.setItem('userToken', userToken);
+    localStorage.setItem('userCodes', userCode);
+    localStorage.setItem('userAgent', userAgent);
+    localStorage.setItem('mobileno', mobileno);
+
+    let getLng = this.search.split('=')[4].split('&')[0];
+    let getLat = this.search.split('=')[5].split('&')[0];
+    console.log(getLng)
+    console.log(getLat)
+    // // console.log(window.location.search)
+    localStorage.setItem('latname', getLat)
+    localStorage.setItem('lngname', getLng)
+  }
+
+}

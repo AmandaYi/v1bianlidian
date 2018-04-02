@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>个人信息</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="content-bg">
+  <div class="userinfo-list">
+    <ion-list>
+      <button ion-item tappable (click)="userPic();" icon-left class="user-pic-lineheight">
+      头像
+      <div class="user-pic">
+        <img src="{{headimgurl}}" />
+      </div>
+    </button>
+      <button ion-item tappable (click)="showNickname()" icon-left>
+      昵称
+      <span color="lightdark">{{nickname}}</span>
+    </button>
+      <ion-item class="date-arrow">
+        <ion-label>生日</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate" cancelText="取消" doneText="确认" (ngModelChange)="upDateTime()"></ion-datetime>
+      </ion-item>
+      <button ion-item tappable (click)="showSex()" icon-left>
+      性别
+      <span color="lightdark">{{userSex}}</span>
+    </button>
+
+    </ion-list>
+
+    <ion-list>
+      <button ion-item tappable (click)="goToBindphonePage()" icon-left>
+      绑定手机号码
+      <span color="lightdark">{{mobile}}</span>
+    </button>
+      <button ion-item tappable (click)="goToEditpasswordPage()" icon-left>
+      修改登录密码
+      </button>
+    </ion-list>
+
+    <button ion-button color="danger" tappable (click)="exitsApp()" type="submit">退出</button>
+
+  </div>
+
+</ion-content>

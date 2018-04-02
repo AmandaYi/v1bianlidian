@@ -1,0 +1,64 @@
+page-suggestions {
+  // ion-header {
+  //   margin-top: 20px;
+  // }
+}
+
+.textarea-box {
+  box-sizing: border-box;
+  padding: 12px;
+  width: 100%;
+  margin-top: 13px;
+  .box {
+    position: relative;
+    padding: 12px 12px 24px 12px;
+    background: #f2f2f2;
+    border-radius: 5px;
+    textarea {
+      width: 100%;
+      border: none;
+      background: #eee;
+      resize: none;
+      height: 16rem;
+      background: #f2f2f2;
+    }
+    div {
+      position: absolute;
+      right: 12px;
+      bottom: 5px;
+      font-size: 1.2rem;
+      color: #999;
+    }
+  }
+  dl {
+    dt {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+    dd {
+      display: inline-block;
+      width: 5rem;
+      height: 5rem;
+      margin: 0;
+      border-radius: 8px;
+      background: #f2f2f2;
+      margin-right: 12px;
+      overflow: hidden;
+      img {
+        display: block;
+        margin: auto;
+        height: 100%;
+      }
+    }
+    .addBtn {
+      background: #999 url(../assets/img/order_details_add@3x.png) no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .button-ios {
+    width: 80%;
+    display: block;
+    padding: 0;
+    margin: 4rem 10% 0 10%;
+  }
+}

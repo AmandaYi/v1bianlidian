@@ -1,0 +1,17 @@
+page-welcome {
+    ion-slide {
+        position: relative;
+        background-color: #eeeeee;
+        .open_life {
+            position: absolute;
+            width: 10rem;
+            bottom: 5rem;
+            left: 50%;
+            margin-left: -5rem;
+        }
+        img {
+            // height: 70vh !important;
+            width: 100% !important;
+        }
+    }
+}

@@ -1,0 +1,247 @@
+page-bookingdetail {
+    // .Orderdetails{
+    //     margin-top: 20px;
+    // }
+    // ion-header{
+    //     margin-top: 20px;
+    // }
+}
+
+.booking-detail-box {
+    .bd-list {
+        background: #fff;
+        margin-top: 18px;
+        h1 {
+            padding:.3rem 12px;
+            font-size: 1.4rem;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            border-bottom:1px solid #eee;
+            span {
+                line-height: 3rem;
+                font-weight: bold;
+                i {
+                height:2.2rem;
+                width:2.2rem;
+                display: block;
+                float: left;
+                margin-top:0.4rem;
+                margin-right:0.3rem;
+                    img {
+                        width:100%;
+                    }
+                }
+            }
+            small {
+                height:2.2rem;
+                width:2.2rem;
+                display: block;
+                float: right;
+                margin-top:0.4rem;
+                background: url(../assets/img/my_arrow@3x.png) 0.4rem center no-repeat;
+                background-size:100% 100%;
+            }
+        }//h1
+        h1:after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+        dl {
+            display: block;
+            margin:0 12px;
+            border-bottom:1px solid #eee;
+            line-height: 3.6rem;
+            font-size: 1.2rem;
+            dt {
+                width:80%;
+                float:left;
+                // padding-left:2.5rem;
+                box-sizing: border-box;
+                span {
+                    margin-right: 0.6rem;
+                }
+                font {
+                    overflow: hidden;
+	                text-overflow: ellipsis;
+	                white-space: nowrap;
+	                width:85%;
+                    display: block;
+                    float: left;
+                }
+                i {
+                    float: right;
+                    font-style: normal;
+                }
+            }
+
+            dd {
+                width:20%;
+                float: right;
+                text-align: right;
+            }
+
+        }//dl
+        dl:after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+        dl:last-child {
+            dt {
+                width:65%;
+                font-size:1.2rem;
+                small {
+                    font-size:1.2rem;
+                }
+            }
+            dd {
+                width:35%;
+                font-size:1.4rem;
+                b {
+                    font-weight:bold;
+                }
+                
+            }
+        }
+
+    }//bd-list
+    .bd-list:after {
+        content:'';
+        display:block;
+        clear:both;
+    }
+
+    .address-info-box {
+        padding-bottom: 9px;
+        background: #fff url(../assets/img/order_details_line@3x.png) -10px bottom repeat-x;
+        background-size:auto 3px;
+        margin-top: 12px;
+        h1 {
+            padding:0 12px;
+            line-height: 3.6rem;
+            font-weight: bold;
+            font-size:1.4rem;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            border-bottom:1px solid #eee;
+            span {
+                line-height: 3.6rem;
+            }
+            small {
+                float: right;
+                font-size:1.4rem;
+                i {
+                    font-style:normal;
+                }
+            }
+        }//h1
+
+        dl {
+            padding:.7rem 0;
+            margin:0 12px;
+            line-height: 2.2rem;
+            font-size:1.2rem;
+            border-bottom:1px solid #eee;
+            dt {
+                width:10%;
+                float:left;
+                line-height: 2.2rem;
+                img {
+                    width:2.2rem;
+                    height:2.2rem;
+                }
+            }
+
+            dd {
+                width:90%;
+                line-height: 2.2rem;
+                float:right;
+                b:last-child {
+                    float: right;
+                }
+                span:last-child {
+                    float: right;
+                }
+            }
+        }//dl
+        dl:last-child {
+            border-bottom:0;
+        }
+        dl:after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+
+    }//address-info-box
+
+
+    .booking-info-list {
+        background: #fff;
+        margin-top: 12px;
+        h1 {
+            padding:0 12px;
+            line-height: 3.6rem;
+            font-size:1.4rem;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            border-bottom:1px solid #eee;
+            span {
+                line-height: 3rem;
+                font-weight: bold;
+            }
+        }//h1
+        dl {
+            padding:.7rem 0;
+            margin:0 12px;
+            line-height: 2.2rem;
+            font-size:1.2rem;
+            border-bottom:1px solid #eee;
+            dt {
+                width:25%;
+                float:left;
+                color:#666;
+            }
+            dd {
+                width:75%;
+                float:left;
+                color:#000;
+            }
+        }
+        dl:last-child {
+            border-bottom:0;
+        }
+        dl:after {
+            content:'';
+            display:block;
+            clear:both;
+        }
+    }//booking-info-list
+
+    
+
+}
+.submit-bar03 {
+    width:100%;
+    padding:0.65rem 12px;
+    background: #f4f4f4;
+    text-align: right;
+    button {
+        font-size:1.4rem;
+        height:3rem;
+        line-height: 3rem;
+        color:#333;
+        padding:0 1rem;
+        border-radius: 3px;
+        background:#f4f4f4;
+        border:1px solid #8B8B8B;
+        box-sizing: border-box;
+        margin-left:6px;
+    }
+    button:last-child {
+        background:#d72227;
+        color:#fff;
+        border:1px solid #d72227;
+    }
+    }//submit-bar03

@@ -1,0 +1,51 @@
+<ion-header>
+  
+    <!-- <ion-navbar>
+      <ion-title>支付密码</ion-title>
+    </ion-navbar> -->
+    <ion-toolbar>
+      <ion-title>
+        支付密码
+      </ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="close()">
+          <!-- <span ion-text color="primary" showWhen="ios">Cancel</span> -->
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <section *ngIf="!isIos" class="android-input">
+    <p>请输入支付密码</p>
+    <div class="pswInput">
+      <span></span>
+      <input type="password" maxlength="6" [(ngModel)]="pass" name="pass" (ngModelChange)="changesValue($event)" />
+      <dl>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+      </dl>
+    </div>
+  </section>
+  <section *ngIf="isIos" class="ios-input">
+    <p>请输入支付密码</p>
+    <div class="pswInput">
+      <span></span>
+      <input type="password" maxlength="6" [(ngModel)]="pass" name="pass" (ngModelChange)="changesValue($event)" />
+      <dl>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+        <dd></dd>
+      </dl>
+    </div>
+  </section>
+  </ion-content>

@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>商品清单</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-list class="list_goods" *ngFor="let data of pitmes">
+        <div class="list_goods_img">
+            <img [src]="data.mainView" alt="">
+        </div>
+        <div class="list_goods_p">
+            <p>{{data.name}}</p>
+            <p>￥{{data.sprice}}</p>
+        </div>
+        <div class="list_goods_d">*{{data.productQty}}</div>
+    </ion-list>
+
+</ion-content>

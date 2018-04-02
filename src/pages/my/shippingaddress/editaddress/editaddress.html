@@ -1,0 +1,57 @@
+<!--
+  Generated template for the Editaddress page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--
+  Generated template for the Createadress page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>编辑收货地址</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding id="regStyle">
+  <ion-list>
+    <div class="listInputBox">
+      <ion-item>
+        <ion-input type="text" name="eName" [(ngModel)]="eName" placeholder="收货人姓名"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="listInputBox">
+      <ion-item>
+        <ion-input type="text" name="eMobileno" [(ngModel)]="eMobileno" placeholder="联系电话"></ion-input>
+      </ion-item>
+    </div>
+    <div class="listInputBox">
+      <ion-item>
+        <!--<ion-label>省市区</ion-label>-->
+        <city-picker item-content [(ngModel)]="eAddress" [cancelText]="'取消'" [doneText]="'完成'" [separator]="' - '" [citiesData]="cityData"
+          (ionChange)="cityChange($event)">
+        </city-picker>
+      </ion-item>
+    </div>
+    <div class="listInputBox">
+      <ion-item>
+        <ion-input type="text" name="eAddressDetail" [(ngModel)]="eAddressDetail" placeholder="请输入详细地址"></ion-input>
+      </ion-item>
+    </div>
+    <div id="noneLine">
+      <ion-item>
+        <ion-label>设置为默认地址（每次下单都默认使用该址）</ion-label>
+        <ion-checkbox color="danger" checked="" [(ngModel)]="eCheckedDef"></ion-checkbox>
+      </ion-item>
+    </div>
+  </ion-list>
+  <button ion-button color="danger" tappable (click)="editAddess();" type="submit">提交并保存</button>
+
+</ion-content>

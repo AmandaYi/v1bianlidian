@@ -1,0 +1,61 @@
+<!--
+  登录页面
+-->
+
+
+<ion-content padding class="LoginTest">
+  <div class="callBack" tappable (click)="dismiss()" [ngStyle]="{'top':isIos?'22px':'6px'}"></div>
+  <div class="logoImg">
+    <img [src]="logoImgUrl" />
+  </div>
+  <form>
+
+    <ion-list>
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="text" name="phoneNo" [(ngModel)]="phoneNo" placeholder="手机号码"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="resetUsername();" class="clearInput">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+          </span>
+        </div>
+      </div>
+      <!--<span padding-left *ngIf="!loginForm.controls.username.valid && loginForm.controls.username.touched"
+            color="danger">
+          请输入正确用户名
+        </span>-->
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="{{passwordType}}" name="password" [(ngModel)]="password" placeholder="密码"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="showPassword();">
+            <img src="{{showPassImg}}"/>
+        </span>
+          <span tappable (click)="resetPassword();" class="clearInput">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+        </span>
+        </div>
+      </div>
+      <!--<span padding-left *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.touched" color="danger">请输入密码</span>-->
+    </ion-list>
+    <!--<span tappable (click)="goToForgetPage();">忘记密码？</span>-->
+
+    <div class="loginButSet">
+      <button ion-button color="danger" style="width:100%;" tappable (click)="goToLogin('login');" type="submit">登录</button>
+    </div>
+
+  </form>
+  <!--<div class="regButSet">
+    <button ion-button color="danger" outline style="width:100%;" tappable (click)="goToRegisterPage();" type="submit">注册</button>
+  </div>-->
+
+  <!--<div class="login-line">
+    <span>合作账号登录</span>
+    <div tappable (click)="wxLogin();">
+      <img ([ngModel])="wexin" [src]="wexinImgUrl" />
+    </div>
+  </div>-->
+
+</ion-content>

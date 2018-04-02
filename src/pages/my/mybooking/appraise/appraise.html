@@ -1,0 +1,83 @@
+<!--
+  Generated template for the Appraise page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{shopName}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="mybooking-box content-bg">
+  <div class="mybooking-simple">
+
+    <p class="no-border">
+      <span>
+          <label>订单编号：</label>{{orderNo}}
+        </span>
+
+    </p>
+    <div class="pro-list">
+      <dl>
+        <dt *ngFor="let pro of odProductList"><img [src]="pro.webImgPath" /></dt>
+        <dd *ngIf='prodCount<2'>{{odProductList[0].productName}}</dd>
+        <dd class="dian" *ngIf='prodCount>1'>...</dd>
+      </dl>
+    </div>
+    <p>
+      <small>共<i> {{prodCount}} </i>件商品，需付款：<b>￥{{orderTotalprice}}</b></small>
+    </p>
+  </div>
+
+  <div class="shop-appraise">
+    <dl>
+      <dt>请为给您提供服务的商家打分</dt>
+      <!--<dd>
+        <i><img src="assets/img/order_details_star_gry@3x.png"/></i>
+        <i><img src="assets/img/order_details_star_gry@3x.png"/></i>
+        <i><img src="assets/img/order_details_star_gry@3x.png"/></i>
+        <i><img src="assets/img/order_details_star_gry@3x.png"/></i>
+        <i><img src="assets/img/order_details_star_gry@3x.png"/></i>
+      </dd>-->
+    </dl>
+    <ion-item>
+      <ion-range min="1" max="5" step="1" snaps="true" [(ngModel)]="score"></ion-range>
+    </ion-item>
+  </div>
+
+  <div class="enter-sug">
+    <h1>评价</h1>
+    <div>
+      <textarea placeholder="请你提供的宝贵建议：" [(ngModel)]="comment"></textarea>
+      <div>
+        <span [style.color]="comment.length>200?'red':''">{{comment.length}}</span>
+        <span>/200字</span>
+      </div>
+      <!--<span>0/200字</span>-->
+    </div>
+    <!--{{commentLength}}-->
+  </div>
+
+  <!--<div class="add-goods-pic">
+    <h1>添加照片</h1>
+    <dl>
+      <dd><img src="assets/img/Sign_logo@3x.png" /></dd>
+      <dd></dd>
+    </dl>
+  </div>
+
+  <div class="info-tips">您的评价将匿名发送给商家</div>-->
+
+
+</ion-content>
+
+<ion-footer>
+  <div class="submit-bar">
+    <button tappable (click)='appraiseXing()'>提交评价</button>
+  </div>
+</ion-footer>

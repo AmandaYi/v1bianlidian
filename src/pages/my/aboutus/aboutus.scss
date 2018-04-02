@@ -1,0 +1,52 @@
+page-aboutus {
+    // ion-header{
+    //     margin-top: 20px;
+    // }
+}
+
+.about-us {
+        
+        dl {
+            margin:0 12px;
+            padding:12px 0;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            font-size:1.4rem;
+            display: block;
+            dt {
+                position: relative;
+                top:12px;
+                width:8rem;
+                img {
+                    width:100%;
+                }
+            }
+
+            dd {
+                padding:24px 12px 12px 12px;
+                margin: 0;
+                border-radius: 0.5rem;
+                background:#f2f2f2;
+                font-size: 1.4rem;
+                line-height: 1.8rem;
+                h1{
+                    margin:0 0 12px 0;
+                    text-align: center;
+                    font-size: 1.8rem;
+                    
+                }
+                p {
+                    margin:0 0 6px 0;
+                }
+
+                div {
+                    text-align: right;
+                    p {
+                        margin:0;
+                    }
+                }
+            }
+
+        }
+
+}

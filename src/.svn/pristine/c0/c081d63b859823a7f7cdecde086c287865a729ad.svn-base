@@ -1,0 +1,54 @@
+<!--
+  Generated template for the Customerservice page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="saleservice">
+
+  <ion-navbar>
+    <ion-title>售后服务</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="mybooking-box content-bg">
+  <div class="mybooking-simple">
+      <p>
+        <span>
+          <label>订单编号：</label>BK282746555664
+        </span>
+      </p>
+      <dl>
+          <dt><img src="assets/img/ningmeng.png" /></dt>
+          <dd>千里山 新西兰进口红玫瑰苹果水果 10个 单果200-220g</dd>
+      </dl>
+      <p>
+        <small>共1件商品，需付款：<b>￥45.00</b></small>
+      </p>
+  </div>
+
+  <div class="enter-sug">
+    <h1>请填写售后/退换原因</h1>
+    <div>
+      <textarea placeholder="请你提供的宝贵建议："></textarea>
+      <span>0/200字</span>
+    </div>
+  </div>
+
+  <div class="add-goods-pic">
+    <h1>添加照片</h1>
+    <dl>
+      <dd><img src="assets/img/Sign_logo@3x.png" /></dd>
+      <dd></dd>
+    </dl>
+  </div>
+
+  <div class="info-tips">您的申请我们将尽快给你回复</div>
+
+  <div class="submit-bar02">
+      <button>提交并保存</button>
+  </div>
+
+</ion-content>

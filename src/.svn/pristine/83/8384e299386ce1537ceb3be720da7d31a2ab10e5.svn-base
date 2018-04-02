@@ -1,0 +1,176 @@
+page-discovery {
+    p {
+        padding: 0;
+        margin: 0;
+    }
+    .find {
+        width: 100%;
+        overflow: hidden;
+        height: 12rem;
+        background-size: cover;
+        background-position: center;
+        .find_Location {
+            margin-top: 2rem;
+            margin-left: 2rem;
+            p {
+                font-size: 1.6rem;
+                color: #ffffff;
+                float: left;
+                border-bottom: 1px solid #ffffff;
+                height: 2.5rem;
+                line-height: 2.5rem;
+            }
+            img {
+                width: 3rem;
+                box-sizing: content-box;
+                float: left;
+            }
+        }
+        .details_Carousel {
+            img {
+                width:100%;
+                height: 12rem;
+            }
+        }
+    }
+    .find_theme {
+        padding: 12px 6px;
+        box-sizing: border-box;
+        overflow: hidden;
+        background: #ffffff;
+        .find_theme-tit {
+            width: 100;
+            overflow: hidden;
+            padding: 0 6px 12px 6px;
+            height: 1.6rem;
+            box-sizing: content-box;
+            dt {
+                margin: 0;
+                padding: 0;
+                float: left;
+                font-size: 1.6rem;
+                color: #D72227;
+                display: block;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            dd {
+                margin: 0;
+                padding: 0;
+                float: left;
+                font-size: 1.4rem;
+                line-height: 2.4rem;
+                color: #999;
+                display: block;
+            }
+        }
+        dl:after {
+            content: '...';
+            display: block;
+            clear: both;
+            overflow: hidden;
+            height: 0;
+        }
+        .find_eat {
+            width: 50%;
+            float: left;
+            overflow: hidden;
+            div {
+                box-sizing: border-box;
+                padding: 0 6px;
+                span {
+                    color: #ACACAC;
+                    font-size: 1.4rem;
+                }
+            }
+            div:nth-child(2n) {
+                border-right: none;
+            }
+        }
+        .find_eat:after {
+            content: '...';
+            display: block;
+            clear: both;
+            overflow: hidden;
+            height: 0;
+        }
+    }
+    .Recommend_today {
+        margin-top: 1rem;
+        overflow: hidden;
+        background: #ffffff;
+        .Recommend_today-qu {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            overflow: hidden;
+            text-align: center;
+            border-bottom: 0.55px solid rgba(0, 0, 0, 0.05);
+            img {
+                width: 1.4rem;
+                box-sizing: content-box;
+                display: inline-block;
+                margin: 0 6px;
+            }
+            p {
+                display: inline-block;
+            }
+            img:nth-child(1) {}
+            p:nth-child(2) {
+                font-style: 2rem;
+                color: #FEB402;
+            }
+            p:nth-child(4) {
+                position: absolute;
+                right: 12px;
+                top: 14px;
+                font-style: 1.4rem;
+                color: #A0A0A0;
+            }
+        }
+        .Recommend_today-lis {
+            div {
+                overflow: hidden;
+                width: 50%;
+                box-sizing: border-box;
+                border-bottom: 1px solid #eee;
+                border-right: 1px solid #eee;
+                float: left;
+                img {
+                    width:100%;
+                    // height:12rem;
+                }
+                h4 {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    font-size: 1.6rem;
+                    box-sizing: border-box;
+                    padding: 0 6px;
+                    margin: 6px 0;
+                }
+                p {
+                    box-sizing: border-box;
+                    padding: 0 6px;
+                    color: #ACACAC;
+                    font-size: 1.2rem;
+                    span:nth-child(1) {
+                        color: #D72227;
+                        font-size: 1.6rem;
+                        font-weight: bold;
+                        margin-right: 6px;
+                    }
+                    span:nth-child(2) {
+                        color: #999;
+                        text-decoration: line-through;
+                        font-size: 1rem;
+                    }
+                }
+            }
+            div:nth-child(2n) {
+                border-right: none;
+            }
+        }
+    }
+}

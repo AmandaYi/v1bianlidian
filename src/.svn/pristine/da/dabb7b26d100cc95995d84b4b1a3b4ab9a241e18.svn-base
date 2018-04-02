@@ -1,0 +1,71 @@
+<!--
+  注册账号
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>注册账号</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding id="regStyle">
+  <form>
+    <ion-list>
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="text" name="phoneNo" [(ngModel)]="phoneNo" placeholder="请输入您的手机号码"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="resetphoneNo();" class="clearInput">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+        </span>
+        </div>
+      </div>
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="text" name="phoneCode" [(ngModel)]="phoneCode" placeholder="请输入验证码"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="resetphoneCode();" class="clearInput" style="margin-right:9rem;">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+          </span>
+        </div>
+        <button [class]="sendCode" tappable (click)="goToGetCode()">{{phoneCodeBtn}}</button>
+        <div [class]="sendCode2">{{phoneCodeBtn}}</div>
+      </div>
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="{{passwordType}}" name="passwordFirst" [(ngModel)]="passwordFirst" placeholder="请设置您的密码(6~16位数字字母组合)"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="showPassword();">
+            <img src="{{showPassImg}}"/>
+        </span>
+          <span tappable (click)="resetInputFirst();" class="clearInput">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+        </span>
+        </div>
+      </div>
+      <div class="listInputBox">
+        <ion-item>
+          <ion-input type="{{passwordType}}" name="passwordSecond" [(ngModel)]="passwordSecond" placeholder="请再次输入密码"></ion-input>
+        </ion-item>
+        <div class="otherTools">
+          <span tappable (click)="showPassword();">
+            <img src="{{showPassImg}}"/>
+        </span>
+          <span tappable (click)="resetInputSecond();" class="clearInput">
+            <img src="assets/img/my_customer_management_close@3x.png"/>
+        </span>
+        </div>
+
+
+      </div>
+
+    </ion-list>
+
+    <button ion-button color="danger" tappable (click)="goToRegister();" type="submit">注册</button>
+  </form>
+</ion-content>

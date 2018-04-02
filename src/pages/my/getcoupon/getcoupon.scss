@@ -1,0 +1,186 @@
+page-getcoupon {
+    // ion-header{
+    //     margin-top: 20px;
+    // }
+}
+
+.coupon-box-topbar {
+        display: block;
+        width:100%;
+        background: #fff;
+        border-bottom:1px solid #ccc;
+        .segment-ios .segment-button:last-of-type {
+            border-radius: 0;
+        }
+        .segment-ios .segment-button:first-of-type {
+            border-radius: 0;
+        }
+        .segment-ios .segment-button.segment-activated {
+            background: #fff;
+            color:#d72227;
+            font-weight: bold;
+        }
+        .segment-ios .segment-button {
+            color: #999;
+            border: 0;
+            font-size:1.2rem;
+            line-height:3.2rem;
+        }
+    }
+    .coupon-box-topbar:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+.coupon-box {
+    
+    dl.co-null {
+        padding:7rem 0 5rem 0;
+        dt {
+            width:4rem;
+            height:4rem;
+            margin: auto;
+            img {
+                width:100%;
+            }
+        }
+        dd {
+            text-align: center;
+            line-height: 4rem;
+            color:#666;
+            font-size: 1.4rem;
+            margin:0;
+        }
+
+    }
+    .co-list {
+        margin-top:1.5rem;
+    }
+    .co-true {
+        dl {
+            position:relative;
+            margin:0 12px 10px 12px;
+            dt {
+                width:40%;
+                display:block;
+                float: left;
+                padding:6px;
+                height:10rem;
+                box-sizing:border-box;
+                text-align: center;
+                color:#fff;
+                div {
+                    font-size: 4rem;
+                    padding:1.2rem  0 0 0;
+                    span {
+                        font-size: 1.4rem;
+                    }
+                }
+                p {
+                    font-size:1.2rem;
+                }
+            }
+            dd {
+                width:60%;
+                display:block;
+                float: right;
+                box-size:content-box;
+                padding:12px;
+                height:10rem;
+                background: #fff;
+                p {
+                    font-size:1.6rem;
+                    font-weight:bold;
+                    line-height: 2rem;
+                    height:4rem;
+                    overflow: hidden;
+                }
+
+                div {
+                    font-size:1.2rem;
+                    padding-bottom:3px;
+                    border-bottom:1px dotted #999;
+                    margin-bottom:3px;
+                    margin-top:6px;
+                }
+
+                span {
+                    font-size:1.2rem;
+                    line-height: 1.2rem;
+                    color:#999;
+                    small {
+                        display: inline-block;
+                        font-size: 1.2rem;
+                        line-height: 1.6rem;
+                        overflow: hidden;
+                        white-space :nowrap;
+                        float: left;
+                    }
+                    b {
+                        display: inline-block;
+                        font-size: 1.2rem;
+                        line-height: 1.6rem;
+                        float: left;
+                        padding:0 5px;
+                    }
+                }
+
+                i {
+                    position:absolute;
+                    right:0;
+                    top:0.5rem;
+                    display: block;
+                    width:8rem;
+                    height:8rem;
+                    z-index: 1;
+                }
+            }
+        }//dl
+        dl:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        dl.doing {
+            dt {
+                background: url(../assets/img/my_coupon_colour@3x.png) center center no-repeat;
+                background-size:100% 100%;
+            }
+            dd {
+                i {display: none;}
+            }
+        }
+
+        dl.used {
+             dt {
+                background: url(../assets/img/my_coupon_gry@3x.png) center center no-repeat;
+                background-size:100% 100%;
+            }
+            dd {
+                i {
+                    display: block;
+                    background: url(../assets/img/my_coupon_use@3x.png) center center no-repeat;
+                    background-size:100% 100%;
+                }
+            }
+        }
+
+        dl.dated {
+             dt {
+                background: url(../assets/img/my_coupon_gry@3x.png) center center no-repeat;
+                background-size:100% 100%;
+            }
+            dd {
+                i {
+                    display: block;
+                    background: url(../assets/img/my_coupon_overdue@3x.png) center center no-repeat;
+                    background-size:100% 100%;
+                }
+            }
+        }
+
+    }
+
+}

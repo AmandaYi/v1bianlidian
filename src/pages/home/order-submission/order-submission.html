@@ -1,0 +1,148 @@
+<ion-header class="orders">
+    <ion-navbar>
+        <ion-title>订单提交</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content style="background: #F3F3F3;">
+    <header class="submission-head" tappable (click)="address()" *ngIf="codeadd==200">
+        <dl class="submission-inf">
+            <dt>
+        <img src="assets/img/home_boy@3x.png" alt="">
+      </dt>
+            <dd class="submission-inf-dd">{{username}}
+                <b>{{mobileno}}</b>
+            </dd>
+        </dl>
+        <dl class="submission-con">
+            <dt>
+        <img src="assets/img/home_address_gry@3x.png" alt="">
+      </dt>
+            <dd class="submission-con-dd">{{provinceName}}{{cityName}}{{countyName}}{{addressDetail}}</dd>
+        </dl>
+        <img src="assets/img/my_arrow@3x.png" alt="" class="submission-img1">
+    </header>
+    <header class="submission-head" tappable (click)="Newaddress()" *ngIf="codeadd!=200">
+        <div class="addressd">
+            <p class="address">您还没有填写收货地址
+                <span>新增收货地址</span>
+            </p>
+            <img src="assets/img/my_arrow@3x.png" alt="" class="submission-img1">
+        </div>
+
+    </header>
+    <section class="Shopping" push-detail>
+        <dl tappable (click)="store()">
+            <dt class="Shopping_home">
+        <img src="assets/img/home_rome@3x.png" alt="">
+      </dt>
+            <dd class="Shopping_city">{{shopName}}
+                <b class="Shopping_Arrow">
+          <img src="assets/img/my_arrow@3x.png" alt="" class="submission-img1">
+        </b>
+            </dd>
+        </dl>
+        <button class="orderImg" tappable (tap)="DetailedList()">
+      <div class="orderImgt" *ngFor="let data of pitmes">
+        <img [src]="data.mainView" alt="">
+      </div>
+      <span>共{{lei}}类商品</span>
+    </button>
+        <button ion-item icon-left class="distribution" tappable (click)="showRadio()">
+      <b>配送方式</b>
+      <span color="dark">{{testRadioResult}}</span>
+    </button>
+
+        <ion-item class="since-time">
+            <ion-label>
+                <!--<i><img src="assets/img/home_time@3x.png" /></i>-->
+                <b>{{testRadioResult}}时间</b>
+            </ion-label>
+            <ion-multi-picker item-content [multiPickerColumns]="simpleColumns" [(ngModel)]="default" cancelText="取消" doneText="确定"></ion-multi-picker>
+        </ion-item>
+
+        <button ion-item icon-left class="coupon" tappable (click)="Coupon()">
+      <b>优品优惠券</b>
+      <!--<span color="#D7D7D7" *ngIf="amount==null">选择优惠卷</span>-->
+      <span color="#D7D7D7">{{couponString}}</span>
+    </button>
+
+        <div class="remarks_shuru">
+            <textarea cols="30" rows="10" placeholder="备注" [(ngModel)]="Remarks"></textarea>
+        </div>
+
+        <dl class="Shopping_paiddl">
+            <dt class="Shopping_Paid">
+        <span>总价：</span>
+        <span>￥{{orderz}}</span>
+      </dt>
+        </dl>
+    </section>
+
+
+
+    <div class="list-001">
+        <h1>支付方式</h1>
+        <dl (click)='gotoPay()'>
+            <dt>
+        <label >
+          <!-- <ion-checkbox color="danger" checked="" [(ngModel)]="mCardPayCheck" name="mCardPayCheck" (ngModelChange)="changesMcardValue()"></ion-checkbox> -->
+          <ion-checkbox color="danger" checked="" [(ngModel)]="mCardPayCheck" name="mCardPayCheck"  ></ion-checkbox>
+          <i>
+            <img src="assets/img/my_money@3x.png">
+          </i>
+        </label>
+      </dt>
+            <dd>
+                <!-- <h2 tappable (click)="payModel()"> -->
+                <h2 tappable>
+                    {{choose}} <span *ngIf="payModelCheck">可用 <i>{{mCardPayCount|number:'.2-2'}}</i> </span>
+                </h2>
+                <i class='tip1'>{{coupText}}</i>
+                <i class="tip2">(烟酒商品不能享用M卡折扣)</i>
+
+            </dd>
+        </dl>
+    </div>
+
+    <!-- <section class="Payment_method">
+        <div>支付方式 </div>
+        <dl>
+            <dt>
+        <img src="assets/img/Sign_wechat@3x.png" alt="">
+      </dt>
+            <dd>微信支付</dd>
+        </dl>
+    </section> -->
+
+    <!-- <div class="list-001">
+    <h1>其他方式</h1>
+    <dl>
+      <dt>
+        <label><ion-checkbox color="danger" checked="" [(ngModel)]="weChatPayCheck" name="weChatPayCheck" (ngModelChange)="changesWeChatValue()"></ion-checkbox>
+          <i><img src="assets/img/weixin2.png"></i>
+          </label>
+      </dt>
+      <dd>
+        <h2>微信支付<span *ngIf="weChatPayCheck">还需支付<i>{{weChatPay|number:'.2-2'}}</i></span></h2>
+      </dd>
+    </dl>
+  </div> -->
+
+</ion-content>
+
+<ion-footer>
+    <section class="payment">
+        <div>共计
+            <b>{{len}}</b>件</div>
+        <div>
+            <span>需付款：</span>
+            <span>￥{{ordery}}</span>
+        </div>
+        <div tappable (click)="gouwu()" *ngIf="die==0">去付款</div>
+        <div tappable (click)="gouwu()" class="ord" *ngIf="die==1" disabled="disabled">去付款</div>
+    </section>
+
+</ion-footer>
+<add-map></add-map>

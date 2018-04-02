@@ -1,0 +1,190 @@
+page-favorites {
+    // ion-header{
+    //     margin-top: 20px;
+    // }
+}
+.faFixedBar2{
+     display: block;
+        width:100%;
+        background: #fff;
+        border-bottom:1px solid #ccc;
+        .segment-ios .segment-button:last-of-type {
+            border-radius: 0;
+        }
+        .segment-ios .segment-button:first-of-type {
+            border-radius: 0;
+        }
+        .segment-ios .segment-button.segment-activated {
+            background: #fff;
+            color:#d72227;
+            font-weight: bold;
+        }
+        .segment-ios .segment-button {
+            color: #999;
+            border: 0;
+            font-size:1.2rem;
+            line-height:3.2rem;
+        }
+}
+.faFixedBar:after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+.favorites-box {
+    position:relative;
+    .fa-list {
+        // margin-top:4.5rem;
+    }
+    dl.fa-null {
+        padding:7rem 0 5rem 0;
+        dt {
+            width:4rem;
+            height:4rem;
+            margin: auto;
+            img {
+                width:100%;
+            }
+        }
+        dd {
+            text-align: center;
+            line-height: 4rem;
+            color:#666;
+            font-size: 1.4rem;
+            margin:0;
+        }
+
+    }
+
+    .fa-true {
+        dl.goods {
+            position:relative;
+            background: #fff;
+            padding:6px 12px;
+            margin-bottom: 10px;
+            dt {
+                width:22%;
+                display:block;
+                float: left;
+                padding:6px;
+                box-sizing:border-box;
+                img {
+                    width:5rem;
+                    height:5rem;
+                }
+            }
+            dd {
+                width:78%;
+                display:block;
+                float: right;
+                box-size:border-box;
+                p {
+                    width: 85%;
+                    margin-top:3px;
+                    small {
+                        color:#999;
+                        margin-right: 2rem;
+                        font-size:1.2rem;
+                    }
+                    small:first-child {
+                        text-decoration: line-through;
+                    }
+                    span {
+                        font-size:1.6rem;
+                        color:#d72227;
+                        font-weight: bold;
+                    }
+                }
+                p:first-child {
+                    font-weight:bold;
+                    font-size:1.4rem;
+                    color:#333;
+                }
+
+                i {
+                    position:absolute;
+                    right:12px;
+                    top:50%;
+                    margin-top:-1.1rem;
+                    width:2.2rem;
+                    height:2.2rem;
+                    display: block;
+                    img {
+                        width:100%;
+                        height:100%;
+                    }
+                }
+            }
+        }
+        dl.goods:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        dl.shop {
+            position:relative;
+            background: #fff;
+            padding:6px 12px;
+            margin-bottom: 10px;
+            dt {
+                width:25%;
+                display:block;
+                float: left;
+                padding:6px;
+                box-sizing:border-box;
+                img {
+                    width:5rem;
+                    height:5rem;
+                }
+            }
+            dd {
+                width:75%;
+                display:block;
+                float: right;
+                box-size:border-box;
+                padding-right:3rem;
+                p {
+                    margin-top:3px;
+                    small {
+                        color:#999;
+                        margin-right: 2rem;
+                        font-size:1.2rem;
+                    }
+                    span {
+                        font-size:1.6rem;
+                        color:#d72227;
+                        font-weight: bold;
+                    }
+                }
+                p:first-child {
+                    font-weight:bold;
+                    font-size:1.4rem;
+                    color:#333;
+                }
+
+                i {
+                    position:absolute;
+                    right:12px;
+                    top:50%;
+                    margin-top:-1.1rem;
+                    width:2.2rem;
+                    height:2.2rem;
+                    display: block;
+                    img {
+                        width:100%;
+                        height:100%;
+                    }
+                }
+            }
+        }
+        dl.shop:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }//fa-true
+
+    
+}

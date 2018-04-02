@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>商品详情</ion-title>
+    <ion-buttons end class="other-button">
+      <ion-buttons left>
+
+      <!--<button ion-button icon-only (click)="goBack()">
+        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+        11
+      </button>-->
+    </ion-buttons>
+      <button ion-button icon-only tappable (click)="heart()" *ngIf="isCollection==false">
+                <ion-icon tappable name="appname-heart" style="font-size: 3rem;color: #353535"></ion-icon>
+            </button>
+      <button ion-button icon-only tappable (click)="CancelColl()" *ngIf="isCollection==true">
+                <ion-icon tappable name="appname-heartYellow" style="font-size: 3rem;color:#FEB402"  tappable (click)="CancelColl()" ></ion-icon>
+            </button>
+      <!--<button ion-button icon-only tappable (click)="share()">
+                <ion-icon tappable name="appname-share" style="font-size: 3rem;color: #353535" ></ion-icon>
+            </button>-->
+
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content style="overflow: hidden;padding-bottom: 3rem;">
+  <header class="details">
+
+
+    <ion-slides class="details_Carousel" pager="true">
+      <!--//(ionSlideDidChange)="slideChanged()"  ass ets/img/chengzi.png-->
+      <ion-slide loop="true" autoplay="2000" *ngFor="let data of carouselpcis">
+
+        <img [src]="data" alt="">
+      </ion-slide>
+
+    </ion-slides>
+
+    <!--<ion-slides class="details_Carousel" pager="true" *ngIf="">
+            <ion-slide>
+
+                <img src="assets/img/boluo.png" alt="">
+            </ion-slide>
+
+            <ion-slide>
+
+                <img src="assets/img/ningmeng.png" alt="">
+            </ion-slide>
+
+        </ion-slides>-->
+
+    <div class="details_information">
+      <div class="details_Price" *ngIf="aprice==undefined">
+        <span>￥{{sprice}}<b>￥{{price}}</b></span>
+      </div>
+      <div class="details_Price" *ngIf="aprice!=undefined">
+        <span>￥{{aprice}}<b class="apr">活动价</b><b>￥{{price}}</b></span>
+      </div>
+      <div class="details_remarks">
+        <span>
+                    {{name}}
+                </span>
+      </div>
+    </div>
+    <div class="particulars">
+      <p>商品详情</p>
+    </div>
+  </header>
+  <section class="Commodity">
+    <dl>
+      <dt>品牌名称</dt>
+      <dd>{{brandname}}</dd>
+    </dl>
+    <dl>
+      <dt>商品名称</dt>
+      <dd>{{name}}</dd>
+    </dl>
+    <dl class="CommodityCode">
+      <dt>商品编码</dt>
+      <dd>{{pid}}</dd>
+    </dl>
+    <!--<section class="descpics" *ngIf="descpics.length==0">
+      <img src="assets/img/Sign_logo@3x.png" alt="">
+    </section>-->
+    <section class="descpics" *ngIf="descpics.length>0">
+      <div *ngFor="let i of descpics">
+        <img [src]="i" alt="">
+      </div>
+
+    </section>
+    <section class="Store">
+      <div class="Store_img">
+        <img [src]="mapic" alt="" *ngIf="mapic!=null">
+        <img src="assets/img/my_photo_thedefaulf@3x.png" alt="" *ngIf="mapic==null">
+      </div>
+      <div class="Store_info">
+        <p>{{storename}}</p>
+        <p>地址：{{addr}}</p>
+      </div>
+    </section>
+  </section>
+</ion-content>
+<ion-footer class="Commodity_footer">
+  <div class="ShoppingCart_l">
+    <div class="ocart">
+      <div class="divimg">
+        <img class="img1" src="assets/img/home_shop_gry@3x.png" *ngIf="!totalCount">
+        <img class="img2" src="assets/img/home_shop_yellow@3x.png" *ngIf="totalCount" tappable (click)="shoppingCart()">
+        <div class="allnum" id="allnum" *ngIf="totalCount">{{totalCount}}</div>
+      </div>
+      <div class="Commodity_footbut">
+        <button ion-button tappable (click)="pay()">立即购买</button>
+        <button ion-button tappable (click)="join()">加入购物车</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-footer>

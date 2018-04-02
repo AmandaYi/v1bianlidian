@@ -1,0 +1,74 @@
+<ion-content padding *ngIf="pd==1">
+  <div class="couponBox">
+    <div *ngIf='noneCoupon==false'>
+      <div class="coupon" *ngFor="let i of couponList">
+        <div class="coupon-left">
+          <span>{{i.name}}优惠券</span>
+          <!-- <span>{{i.couponType==0?'满减':'折扣'}}{{i.name}}优惠券</span> -->
+        </div>
+        <div><button type="" tappable (click)='getCoupon(i.id);' [style.color]="i.isGet=='已领取'?'green':'#000'">{{i.isGet=='已领取'?'已领取':'领券'}}</button></div>
+      </div>
+    </div>
+    <div *ngIf='noneCoupon==true'>暂无优惠券</div>
+  </div>
+  <img class="close" tappable (click)="close()" src="./assets/img/my_customer_management_close@3x.png" alt="">
+</ion-content>
+<ion-content padding *ngIf="pd==2">
+  <div class="couponBox">
+    <div *ngIf="aName==null">
+      <p style="font-size: 1.5rem">您还没有领劵</p>
+    </div>
+
+    <div *ngIf="aName!=null">
+      <div *ngFor="let i of aName">
+        <div *ngIf="i.couponActivity.liveDays==null&&i.couponActivity.liveDays==undefined">
+          <div class="coupons" *ngIf="i.couponActivity.amount>0 && order >= i.couponActivity.threshold && i.couponActivity.liveStartTime <= day && i.couponActivity.liveEndTime >= day">
+            <div class="coupon-left">
+              <span>{{i.couponActivity.name}}优惠券</span>
+            </div>
+            <div>
+              <button type="" tappable (click)='UseCoupons(i);'>用券</button>
+            </div>
+          </div>
+
+          <div class="coupon1" *ngIf="i.couponActivity.amount==0 && order < i.couponActivity.threshold || i.couponActivity.liveStartTime > day || i.couponActivity.liveEndTime < day">
+            <div class="coupon-left">
+              <span>{{i.couponActivity.name}}优惠券</span>
+            </div>
+            <div>
+              <button type="" tappable (click)='UseCoupons(i);' disabled="disabled">用券</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="i.couponActivity.liveDays!=null&&i.couponActivity.liveDays!=undefined">
+          <div class="coupons" *ngIf="i.couponActivity.amount>0 && order >= i.couponActivity.threshold && i.couponActivity.createTime <= day && i.couponActivity.downTime >= day">
+            <div class="coupon-left">
+              <span>{{i.couponActivity.name}}优惠券</span>
+            </div>
+            <div>
+              <button type="" tappable (click)='UseCoupons(i);'>用券</button>
+            </div>
+          </div>
+
+          <div class="coupon1" *ngIf="i.couponActivity.amount==0 && order < i.couponActivity.threshold || i.couponActivity.createTime > day || i.couponActivity.downTime < day">
+            <div class="coupon-left">
+              <span>{{i.couponActivity.name}}优惠券</span>
+            </div>
+            <div>
+              <button type="" tappable (click)='UseCoupons(i);' disabled="disabled">用券</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="quxiao" tappable (click)="CancelUse()">
+      取消使用优惠劵
+    </div>
+  </div>
+
+  <img class="close" tappable (click)="cloes()" src="./assets/img/my_customer_management_close@3x.png" alt="">
+</ion-content>

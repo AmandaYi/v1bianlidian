@@ -1,0 +1,401 @@
+import { Component } from '@angular/core';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { AppraisePage } from "./appraise/appraise";
+import { BookingdetailPage } from "./bookingdetail/bookingdetail";
+import { BookingstatusPage } from "./bookingstatus/bookingstatus";
+import { AppConfig } from "../../../app/app.config";
+import { Http } from "@angular/http";
+import { AppGlobal } from "../../../AppGlobal";
+import { Ajax } from "../../../app/ajax";
+import { OrderFulfillment } from "../../home/order-submission/order-fulfillment/order-fulfillment";
+
+declare var Wechat: any;
+
+
+@Component({
+  selector: 'page-mybooking',
+  templateUrl: 'mybooking.html'
+})
+export class MybookingPage {
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public http: Http,
+    public appGlobal: AppGlobal,
+    private ajax: Ajax,
+    public alertCtrl: AlertController,
+    private toastCtrl: ToastController
+  ) {
+
+    this.noTab = navParams.get('noTab');  //获取切换页
+    this.tokenId = localStorage.getItem('tokenId');//获取会话密钥
+    this.userAgent = localStorage.getItem('userAgent');
+    this.segmentsArray = ['DaiFuKuan', 'DaiShouKuan', 'DaiPenJai', 'AllOrder'];
+    this.orderList = this.segmentsArray[this.noTab];
+
+  }
+  userAgent: string;
+  noTab: any;          //切换
+  tokenId: any;       //会话密钥
+  goodsListBox: any;  //订单
+  listLength: any;    //数据数量
+  orderStatus: any;   //订单状态
+  DaiFuKuanBox: any;  //待付款数据
+  DaiShouKuanBox: any;//待收货数据
+  DaiPenJaiBox: any;  //待评价数据
+  ShouHouBox: any;    //退款或售后数据
+  AllOrderBox: any;   //全部订单数据
+  DaiFuKuanPage: any = 1;//待付款当前页码
+  DaiShouKuanPage: any = 1;//待收货当前页码
+  DaiPenJaiPage: any = 1;//待评价当前页码
+  ShouHouPage: any = 1;//退款或售后当前页码
+  AllOrderPage: any = 1;//全部订单当前页码
+  DaiFuKuanTotal: any; //待付款总页数
+  DaiShouKuanTotal: any; //待收货总页数
+  DaiPenJaiTotal: any; //待评价总页数
+  ShouHouTotal: any; //退款或售后总页数
+  AllOrderTotal: any; //全部订单总页数
+  dixian: any = 0;//我也有底线
+
+  segmentsArray: any;
+  orderList: string;
+
+  listLength1: any;
+  goodsListBox1: any;
+  listLength2: any;
+  goodsListBox2: any;
+  listLength3: any;
+  goodsListBox3: any;
+  listLength4: any;
+  goodsListBox4: any;
+  listLength5: any;
+  goodsListBox5: any;
+
+  ionViewWillEnter() {
+    //加载处理
+    this.appGlobal.showLoading();
+
+    //个人中心点击判断
+    if (this.noTab == 0) {
+      // this.orderList = this.segmentsArray[0];
+      this.DaiFuKuan();
+    } else if (this.noTab == 1) {
+      // this.orderList = this.segmentsArray[1];
+      this.DaiShouKuan();
+    } else if (this.noTab == 2) {
+      // this.orderList = this.segmentsArray[2];
+      this.DaiPenJai();
+    } else if (this.noTab == 3) {
+      // this.orderList = this.segmentsArray[4];
+      this.AllOrder();
+    }
+
+  }
+
+
+  //查询待付款
+  DaiFuKuan() {
+    this.DaiFuKuanPage = 1;//待付款当前页码
+    this.dixian = 0; //底线清零
+    this.noTab = 0;
+    this.orderList = this.segmentsArray[0];
+
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=1&page=' + this.DaiFuKuanPage + '&size=10'+ '&userAgent=' + this.userAgent)
+      .toPromise()
+      .then(response => {
+        this.listLength1 = response.json().content.length;
+        this.goodsListBox1 = response.json().content;
+        this.DaiFuKuanTotal = response.json().totalPages;
+      })
+  }
+
+
+
+  //查询待收货
+  DaiShouKuan() {
+    this.DaiShouKuanPage = 1;//待收货当前页码
+    this.dixian = 0; //底线清零
+    this.noTab = 1;
+    this.orderList = this.segmentsArray[1];
+
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=3&page=' + this.DaiShouKuanPage + '&size=10'+ '&userAgent=' + this.userAgent)
+      .toPromise()
+      .then(response => {
+        this.listLength2 = response.json().content.length;
+        this.goodsListBox2 = response.json().content;
+        this.DaiShouKuanTotal = response.json().totalPages;
+      })
+  }
+
+
+  //查询待评价
+  DaiPenJai() {
+    this.DaiPenJaiPage = 1;//待评价当前页码
+    this.dixian = 0; //底线清零
+    this.noTab = 2;
+    this.orderList = this.segmentsArray[2];
+
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=4&page=' + this.DaiPenJaiPage + '&size=10'+ '&userAgent=' + this.userAgent)
+      .toPromise()
+      .then(response => {
+        this.listLength3 = response.json().content.length;
+        this.goodsListBox3 = response.json().content;
+        this.DaiPenJaiTotal = response.json().totalPages;
+      })
+  }
+
+
+  //查询退款或售后
+  // ShouHou() {
+  //   this.ShouHouPage = 1;//退款或售后当前页码
+  //   this.dixian = 0; //底线清零
+  //   this.noTab = 3;
+  //   this.orderList = this.segmentsArray[3];
+
+  //   this.http.get(AppConfig.getDebugUrl + '/api/shop/orderReturn/findOrderReturnList?tokenId=' + this.tokenId + '&page=' + this.ShouHouPage + '&size=10'+ '&userAgent=' + this.userAgent)
+  //     .toPromise()
+  //     .then(response => {
+  //       this.listLength4 = response.json().content.length;
+  //       this.goodsListBox4 = response.json().content;
+  //       this.ShouHouTotal = response.json().totalPages;
+  //     })
+
+  // }
+
+
+  //查询全部订单
+  AllOrder() {
+    this.AllOrderPage = 1;//全部订单当前页码
+    this.dixian = 0; //底线清零
+    this.noTab = 3;
+    this.orderList = this.segmentsArray[3];
+
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=0&page=' + this.AllOrderPage + '&size=10'+ '&userAgent=' + this.userAgent)
+      .toPromise()
+      .then(response => {
+        console.log(response.json());
+        this.listLength5 = response.json().content.length;
+        this.goodsListBox5 = response.json().content;
+        this.AllOrderTotal = response.json().totalPages;
+      })
+  }
+
+
+
+  //进入商品评价页面
+  goToAppraisePage(shopId: any, passId: any, orderNo: any) {
+    this.navCtrl.push(AppraisePage, { shopId: shopId, passId: passId, orderNo: orderNo });
+  }
+
+  //退款与售后电话
+  Customerservice(shopid: any) {
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/info/contContent/service-staff?shopId=' + shopid)
+      .toPromise()
+      .then(response => {
+        console.log(response.json());
+        if (response.json().code == 200) {
+          let alert = this.alertCtrl.create({
+            title: '服务热线：' + response.json().data[0].telno,
+            // subTitle: response.json().data[0].telno,
+            buttons: ['确认']
+          });
+          alert.present();
+        } else {
+          // let alert = this.alertCtrl.create({
+          //   title: response.json().message,
+          //   // subTitle: response.json().message,
+          //   buttons: ['确认']
+          // });
+          // alert.present();
+        }
+
+      })
+  }
+
+  //查询订单详情
+  goToBookingdetailPage(orderNo: any, orderStatus: any) {
+    this.navCtrl.push(BookingdetailPage, { orderNo: orderNo, orderStatus: orderStatus });
+  }
+
+  //订单状态流水
+  goToBookingstatusPage(orderNo: any) {
+    this.navCtrl.push(BookingstatusPage, { orderNoDetail: orderNo });
+  }
+
+  //确认收货
+  confirmOrder(orderNo: any) {
+    this.ajax.post(AppConfig.getDebugUrl + '/api/shop/order/confirmOrder', { tokenId: this.tokenId, orderNo: orderNo ,userAgent: this.userAgent})
+      .toPromise()
+      .then(response => {
+        console.log(response.json());
+        if (response.json().code == 200) {
+          this.appGlobal.showToast(response.json().msg, 2000)
+          this.DaiShouKuan();
+        } else {
+          this.appGlobal.showToast(response.json().msg, 2000)
+        }
+      })
+  }
+
+  // 微信支付
+  openPay(orderno: any) {
+
+    // 微信支付
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/lmcard/lmAuthWxPayGeneratePayment', { orderno: orderno })
+      .toPromise()
+      .then(response => {
+        let pays = {
+          partnerid: response.json().data.partnerid, // merchant id 商户id
+          prepayid: response.json().data.prepayid, // prepay id 预付id
+          noncestr: response.json().data.noncestr, // nonce 随机字符串
+          timestamp: response.json().data.timestamp, // timestamp 时间戳
+          sign: response.json().data.sign, // signed string 签名
+        };
+        window.parent.postMessage(pays, "*");
+      })
+
+  }
+
+
+  //待付款上拉加载
+  doInfiniteDaiFuKuan(infiniteScroll) {
+    let gLB1: any;
+    if (this.DaiFuKuanTotal > 1) {
+      if (this.DaiFuKuanPage < this.DaiFuKuanTotal + 1) {
+        this.DaiFuKuanPage++;
+        setTimeout(() => {
+          this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=1&page=' + this.DaiFuKuanPage + '&size=10'+ '&userAgent=' + this.userAgent)
+            .toPromise()
+            .then(response => {
+              gLB1 = response.json().content;
+              for (let i = 0; i < gLB1.length; i++) {
+                this.goodsListBox1.push(gLB1[i]);
+              }
+            })
+
+          infiniteScroll.complete();
+        }, 500);
+
+      } else {
+        infiniteScroll.complete();
+        this.dixian = 1;
+      }
+    } else {
+      infiniteScroll.complete();
+    }
+  }
+
+  //待收货上拉加载
+  doInfiniteDaiShouKuan(infiniteScroll) {
+    let gLB2: any;
+    if (this.DaiShouKuanTotal > 1) {
+      if (this.DaiShouKuanPage < this.DaiShouKuanTotal + 1) {
+        this.DaiShouKuanPage++;
+        setTimeout(() => {
+          this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=3&page=' + this.DaiShouKuanPage + '&size=10'+ '&userAgent=' + this.userAgent)
+            .toPromise()
+            .then(response => {
+              gLB2 = response.json().content;
+              for (let i = 0; i < gLB2.length; i++) {
+                this.goodsListBox2.push(gLB2[i]);
+              }
+            })
+          infiniteScroll.complete();
+        }, 500);
+      } else {
+        infiniteScroll.complete();
+        this.dixian = 1;
+      }
+    } else {
+      infiniteScroll.complete();
+    }
+  }
+
+
+  //待评价上拉加载
+  doInfiniteDaiPenJai(infiniteScroll) {
+    let gLB3: any;
+    if (this.DaiPenJaiTotal > 1) {
+      if (this.DaiPenJaiPage < this.DaiPenJaiTotal + 1) {
+        this.DaiPenJaiPage++;
+        setTimeout(() => {
+          this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=4&page=' + this.ShouHouPage + '&size=10'+ '&userAgent=' + this.userAgent)
+            .toPromise()
+            .then(response => {
+              gLB3 = response.json().content;
+              for (let i = 0; i < gLB3.length; i++) {
+                this.goodsListBox3.push(gLB3[i]);
+              }
+            })
+          infiniteScroll.complete();
+        }, 500);
+
+      } else {
+        infiniteScroll.complete();
+        this.dixian = 1;
+      }
+    } else {
+      infiniteScroll.complete();
+    }
+  }
+
+  //售后上拉加载
+  // doInfiniteShouHou(infiniteScroll) {
+  //   let gLB4: any;
+  //   if (this.ShouHouTotal > 1) {
+  //     if (this.ShouHouPage < this.ShouHouTotal + 1) {
+  //       this.ShouHouPage++;
+  //       setTimeout(() => {
+  //         this.http.get(AppConfig.getDebugUrl + '/api/shop/orderReturn/findOrderReturnList?tokenId=' + this.tokenId + '&page=' + this.ShouHouPage + '&size=10'+ '&userAgent=' + this.userAgent)
+  //           .toPromise()
+  //           .then(response => {
+  //             gLB4 = response.json().content;
+  //             for (let i = 0; i < gLB4.length; i++) {
+  //               this.goodsListBox4.push(gLB4[i]);
+  //             }
+  //           })
+
+  //         infiniteScroll.complete();
+  //       }, 500);
+
+  //     } else {
+  //       infiniteScroll.complete();
+  //       this.dixian = 1;
+  //     }
+  //   } else {
+  //     infiniteScroll.complete();
+  //   }
+  // }
+
+  //全部订单上拉加载
+  doInfiniteAllOrder(infiniteScroll) {
+    let gLB5: any;
+    if (this.AllOrderTotal > 1) {
+      if (this.AllOrderPage < this.AllOrderTotal + 1) {
+        this.AllOrderPage++;
+        setTimeout(() => {
+          this.http.get(AppConfig.getDebugUrl + '/api/shop/order/queryOrders?tokenId=' + this.tokenId + '&eq_orderStatus=0&page=' + this.AllOrderPage + '&size=10'+ '&userAgent=' + this.userAgent)
+            .toPromise()
+            .then(response => {
+              gLB5 = response.json().content;
+              for (let i = 0; i < gLB5.length; i++) {
+                this.goodsListBox5.push(gLB5[i]);
+              }
+            })
+
+          infiniteScroll.complete();
+        }, 500);
+
+      } else {
+        infiniteScroll.complete();
+        this.dixian = 1;
+      }
+    } else {
+      infiniteScroll.complete();
+    }
+  }
+
+
+
+}

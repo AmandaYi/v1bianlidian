@@ -1,0 +1,425 @@
+<ion-header class="ordes">
+
+    <ion-navbar>
+        <ion-title>我的订单</ion-title>
+    </ion-navbar>
+    <div class="topbar">
+        <ion-segment [(ngModel)]="orderList">
+            <ion-segment-button value="DaiFuKuan" tappable (click)="DaiFuKuan();">
+                待付款
+            </ion-segment-button>
+            <ion-segment-button value="DaiShouKuan" tappable (click)="DaiShouKuan();">
+                待收货
+            </ion-segment-button>
+            <ion-segment-button value="DaiPenJai" tappable (click)="DaiPenJai();">
+                待评价
+            </ion-segment-button>
+            <!-- <ion-segment-button value="ShouHou" tappable (click)="ShouHou();">
+        退款/售后
+      </ion-segment-button> -->
+            <ion-segment-button value="AllOrder" tappable (click)="AllOrder();">
+                全部订单
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+</ion-header>
+
+
+<ion-content class="mybooking-box content-bg" style="margin-top:1rem; ">
+
+    <div [ngSwitch]="orderList">
+        <!--//查询待付款-->
+        <div *ngSwitchCase="'DaiFuKuan'">
+            <!--1-->
+            <dl class="mybooking-null" *ngIf="listLength1==0">
+                <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+                <dd>您暂无待付款订单哦！</dd>
+            </dl>
+
+            <div class="mybooking-simple" *ngFor="let goods1 of goodsListBox1">
+                <h1>
+                    <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{goods1.shopName}}
+        </span>
+                </h1>
+                <p tappable (click)="goToBookingdetailPage(goods1.orderNo);" class="no-border">
+                    <span>
+          <label>订单编号：</label>{{goods1.orderNo}}
+        </span>
+                    <small [ngSwitch]="goods1.orderStatus">
+        <i *ngSwitchCase="1">
+            <small [ngSwitch]="goods1.payType">
+          <i *ngSwitchCase="3">部分支付</i>
+          <i *ngSwitchDefault>待付款</i>
+            </small>
+                    </i>
+                    <i *ngSwitchCase="2">待发货</i>
+                    <i *ngSwitchCase="3">待收货</i>
+                    <i *ngSwitchCase="4">待评价</i>
+                    <i *ngSwitchCase="5">已完成</i>
+                    <i *ngSwitchCase="6">待自提</i>
+                    <i *ngSwitchCase="7">退款中</i>
+                    <i *ngSwitchCase="8">已退款</i>
+                    <i *ngSwitchCase="9">已取消</i>
+                    <i *ngSwitchCase="10">已删除</i>
+                    <i *ngSwitchCase="11">待商家确认</i>
+                    <i *ngSwitchCase="12">待系统确认</i>
+                    <i *ngSwitchCase="13">换货中</i>
+                    <i *ngSwitchCase="15">已退货</i>
+                    <i *ngSwitchCase="19">订单超时</i>
+                    </small>
+                </p>
+                <div class="pro-list">
+                    <dl tappable (click)="goToBookingdetailPage(goods1.orderNo,goods1.orderStatus);">
+                        <dt *ngFor="let pro1 of goods1.odProductList"><img [src]="pro1.webImgPath" /></dt>
+                        <dd *ngIf='goods1.odProductList.length<2'>{{goods1.odProductList[0].productName}}</dd>
+                        <dd class="dian" *ngIf='goods1.odProductList.length>1'>...</dd>
+                    </dl>
+                </div>
+                <p>
+                    <small>共<i> {{goods1.odProductList.length}} </i>件商品，实付：<b>￥{{goods1.paidIn}}</b></small>
+                </p>
+                <div>
+                    <button tappable (click)="openPay(goods1.orderNo)">去支付</button>
+                </div>
+            </div>
+            <!--刷新-->
+            <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+            <ion-infinite-scroll (ionInfinite)="doInfiniteDaiFuKuan($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+
+
+        </div>
+
+
+
+        <!--//查询待收货-->
+        <div *ngSwitchCase="'DaiShouKuan'">
+            <!--2-->
+            <dl class="mybooking-null" *ngIf="listLength2==0">
+                <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+                <dd>您暂无待收货订单哦！</dd>
+            </dl>
+
+            <div class="mybooking-simple" *ngFor="let goods2 of goodsListBox2">
+                <h1>
+                    <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{goods2.shopName}}
+        </span>
+                    <small *ngIf="goods2.receiveCode!=null">
+            取货码:{{goods2.receiveCode}}
+          </small>
+                </h1>
+                <p tappable (click)="goToBookingdetailPage(goods2.orderNo);" class="no-border">
+                    <span>
+          <label>订单编号：</label>{{goods2.orderNo}}
+        </span>
+                    <small [ngSwitch]="goods2.orderStatus">
+                        <i *ngSwitchCase="1">
+                            <small [ngSwitch]="goods2.payType">
+                          <i *ngSwitchCase="3">部分支付</i>
+                          <i *ngSwitchDefault>待付款</i>
+                            </small>
+                    </i>
+                    <i *ngSwitchCase="2">待发货</i>
+                    <i *ngSwitchCase="3">待收货</i>
+                    <i *ngSwitchCase="4">待评价</i>
+                    <i *ngSwitchCase="5">已完成</i>
+                    <i *ngSwitchCase="6">待自提</i>
+                    <i *ngSwitchCase="7">退款中</i>
+                    <i *ngSwitchCase="8">已退款</i>
+                    <i *ngSwitchCase="9">已取消</i>
+                    <i *ngSwitchCase="10">已删除</i>
+                    <i *ngSwitchCase="11">待商家确认</i>
+                    <i *ngSwitchCase="12">待系统确认</i>
+                    <i *ngSwitchCase="13">换货中</i>
+                    <i *ngSwitchCase="19">订单超时</i>
+                    </small>
+                </p>
+                <div class="pro-list">
+                    <dl tappable (click)="goToBookingdetailPage(goods2.orderNo,goods2.orderStatus);">
+                        <dt *ngFor="let pro2 of goods2.odProductList"><img [src]="pro2.webImgPath" /></dt>
+                        <dd *ngIf='goods2.odProductList.length<2'>{{goods2.odProductList[0].productName}}</dd>
+                        <dd class="dian" *ngIf='goods2.odProductList.length>1'>...</dd>
+                    </dl>
+                </div>
+                <p>
+                    <small>共<i> {{goods2.odProductList.length}} </i>件商品，实付：<b>￥{{goods2.paidIn}}</b></small>
+                </p>
+                <div>
+                    <small [ngSwitch]="goods2.orderStatus">
+            <span *ngSwitchCase="3">
+              <!--<button  tappable (click)="goToBookingstatusPage(goods2.orderNo)">查看进度</button>-->
+              <button  tappable (click)="Customerservice(goods2.shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(goods2.orderNo)">确定收货</button>
+            </span>
+            <span *ngSwitchCase="6">
+              <button  tappable (click)="goToBookingstatusPage(goods2.orderNo)">查看进度</button>
+              <button  tappable (click)="Customerservice(goods2.shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(goods2.orderNo)">确定收货</button>
+            </span>
+          </small>
+                </div>
+            </div>
+
+            <!--刷新-->
+            <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+            <ion-infinite-scroll (ionInfinite)="doInfiniteDaiShouKuan($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </div>
+
+        <!--//查询待评价-->
+        <div *ngSwitchCase="'DaiPenJai'">
+            <!--3-->
+            <dl class="mybooking-null" *ngIf="listLength3==0">
+                <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+                <dd>您暂无待评价订单哦！</dd>
+            </dl>
+
+            <div class="mybooking-simple" *ngFor="let goods3 of goodsListBox3">
+                <h1>
+                    <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{goods3.shopName}}
+        </span>
+                    <small *ngIf="goods3.receiveCode!=null">
+            取货码:{{goods3.receiveCode}}
+          </small>
+                </h1>
+                <p tappable (click)="goToBookingdetailPage(goods3.orderNo);" class="no-border">
+                    <span>
+          <label>订单编号：</label>{{goods3.orderNo}}
+        </span>
+                    <small [ngSwitch]="goods3.orderStatus">
+                        <i *ngSwitchCase="1">
+                            <small [ngSwitch]="goods3.payType">
+                          <i *ngSwitchCase="3">部分支付</i>
+                          <i *ngSwitchDefault>待付款</i>
+                            </small>
+                    </i>
+                    <i *ngSwitchCase="2">待发货</i>
+                    <i *ngSwitchCase="3">待收货</i>
+                    <i *ngSwitchCase="4">待评价</i>
+                    <i *ngSwitchCase="5">已完成</i>
+                    <i *ngSwitchCase="6">待自提</i>
+                    <i *ngSwitchCase="7">退款中</i>
+                    <i *ngSwitchCase="8">已退款</i>
+                    <i *ngSwitchCase="9">已取消</i>
+                    <i *ngSwitchCase="10">已删除</i>
+                    <i *ngSwitchCase="11">待商家确认</i>
+                    <i *ngSwitchCase="12">待系统确认</i>
+                    <i *ngSwitchCase="13">换货中</i>
+                    <i *ngSwitchCase="19">订单超时</i>
+                    </small>
+                </p>
+                <div class="pro-list">
+                    <dl tappable (click)="goToBookingdetailPage(goods3.orderNo,goods3.orderStatus);">
+                        <dt *ngFor="let pro3 of goods3.odProductList"><img [src]="pro3.webImgPath" /></dt>
+                        <dd *ngIf='goods3.odProductList.length<2'>{{goods3.odProductList[0].productName}}</dd>
+                        <dd class="dian" *ngIf='goods3.odProductList.length>1'>...</dd>
+                    </dl>
+                </div>
+                <p>
+                    <small>共<i> {{goods3.odProductList.length}} </i>件商品，实付：<b>￥{{goods3.paidIn}}</b></small>
+                </p>
+                <div>
+                    <button tappable (click)="Customerservice(goods3.shopid)">申请售后</button>
+                    <button tappable (click)="goToAppraisePage(goods3.shopid,goods3.passId,goods3.orderNo)">去评价</button>
+                </div>
+            </div>
+
+            <!--刷新-->
+            <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+            <ion-infinite-scroll (ionInfinite)="doInfiniteDaiPenJai($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+
+        </div>
+
+        <!--//查询退款与售后-->
+        <!-- <div *ngSwitchCase="'ShouHou'">
+      <dl class="mybooking-null" *ngIf="listLength4==0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>您暂无退款与售后订单哦！</dd>
+      </dl>
+
+      <div class="mybooking-simple" *ngFor="let goods4 of goodsListBox4">
+        <h1>
+          <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{goods4.shopName}}
+        </span>
+        </h1>
+        <p tappable (click)="goToBookingdetailPage(goods4.orderNo);" class="no-border">
+          <span>
+          <label>订单编号：</label>{{goods4.orderNo}}
+        </span>
+          <small [ngSwitch]="goods4.orderStatus">
+        <i *ngSwitchCase="1">待付款</i>
+        <i *ngSwitchCase="2">待发货</i>
+        <i *ngSwitchCase="3">待收货</i>
+        <i *ngSwitchCase="4">待评价</i>
+        <i *ngSwitchCase="5">已完成</i>
+        <i *ngSwitchCase="6">待自提</i>
+        <i *ngSwitchCase="7">退款中</i>
+        <i *ngSwitchCase="8">已退款</i>
+        <i *ngSwitchCase="9">已取消</i>
+        <i *ngSwitchCase="10">已删除</i>
+        <i *ngSwitchCase="11">待商家确认</i>
+        <i *ngSwitchCase="12">待系统确认</i>
+        <i *ngSwitchCase="13">换货中</i>
+        <i *ngSwitchCase="19">订单超时</i>
+      </small>
+        </p>
+        <div class="pro-list">
+          <dl tappable (click)="goToBookingdetailPage(goods4.orderNo,goods4.orderStatus);">
+            <dt *ngFor="let pro4 of goods4.odProductList"><img [src]="pro4.webImgPath" /></dt>
+            <dd *ngIf='goods4.odProductList.length<2'>{{goods4.odProductList[0].productName}}</dd>
+            <dd class="dian" *ngIf='goods4.odProductList.length>1'>...</dd>
+          </dl>
+        </div>
+        <p>
+          <small>共<i> {{goods4.odProductList.length}} </i>件商品，实付：<b>￥{{goods4.paidIn}}</b></small>
+        </p>
+        <div>
+          <button tappable (click)="Customerservice(goods4.shopid)">申请售后</button>
+        </div>
+      </div>
+
+      <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+      <ion-infinite-scroll (ionInfinite)="doInfiniteShouHou($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div> -->
+
+
+
+        <!--//查询全部订单-->
+        <div *ngSwitchCase="'AllOrder'">
+            <!--5-->
+            <dl class="mybooking-null" *ngIf="listLength5==0">
+                <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+                <dd>您暂无订单哦！</dd>
+            </dl>
+
+            <div class="mybooking-simple" *ngFor="let goods5 of goodsListBox5">
+                <h1>
+                    <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{goods5.shopName}}
+        </span>
+                    <small *ngIf="goods5.receiveCode!=null">
+            取货码:{{goods5.receiveCode}}
+          </small>
+                </h1>
+                <p tappable (click)="goToBookingdetailPage(goods5.orderNo);" class="no-border">
+                    <span>
+          <label>订单编号：</label>{{goods5.orderNo}}
+        </span>
+                    <small [ngSwitch]="goods5.orderStatus">
+                        <i *ngSwitchCase="1">
+                            <small [ngSwitch]="goods5.payType">
+                          <i *ngSwitchCase="3">部分支付</i>
+                          <i *ngSwitchDefault>待付款</i>
+                            </small>
+                    </i>
+                    <i *ngSwitchCase="2">待发货</i>
+                    <i *ngSwitchCase="3">待收货</i>
+                    <i *ngSwitchCase="4">待评价</i>
+                    <i *ngSwitchCase="5">已完成</i>
+                    <i *ngSwitchCase="6">待自提</i>
+                    <i *ngSwitchCase="7">退款中</i>
+                    <i *ngSwitchCase="8">已退款</i>
+                    <i *ngSwitchCase="9">已取消</i>
+                    <i *ngSwitchCase="10">已删除</i>
+                    <i *ngSwitchCase="11">待商家确认</i>
+                    <i *ngSwitchCase="12">待系统确认</i>
+                    <i *ngSwitchCase="13">换货中</i>
+                    <i *ngSwitchCase="19">订单超时</i>
+                    </small>
+                </p>
+                <div class="pro-list">
+                    <dl tappable (click)="goToBookingdetailPage(goods5.orderNo,goods5.orderStatus);">
+                        <dt *ngFor="let pro of goods5.odProductList"><img [src]="pro.webImgPath" /></dt>
+                        <dd *ngIf='goods5.odProductList.length<2'>{{goods5.odProductList[0].productName}}</dd>
+                        <dd class="dian" *ngIf='goods5.odProductList.length>1'>...</dd>
+                    </dl>
+                </div>
+                <p>
+                    <small>共<i> {{goods5.odProductList.length}} </i>件商品，实付：<b>￥{{goods5.paidIn}}</b></small>
+                </p>
+                <div>
+                    <small [ngSwitch]="goods5.orderStatus">
+            <span *ngSwitchCase="1">
+              <button  tappable (click)="openPay(goods5.orderNo)">去支付</button>
+            </span>
+            <span *ngSwitchCase="3">
+              <button  tappable (click)="goToBookingstatusPage(goods5.orderNo)">查看进度</button>
+              <button  tappable (click)="Customerservice(goods5.shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(goods5.orderNo)">确定收货</button>
+            </span>
+            <span *ngSwitchCase="4">
+              <button  tappable (click)="Customerservice(goods5.shopid)">申请售后</button>
+              <button  tappable (click)="goToAppraisePage(goods5.shopid,goods5.passId,goods5.orderNo)">去评价</button>
+            </span>
+            <span *ngSwitchCase="6">
+              <button  tappable (click)="goToBookingstatusPage(goods5.orderNo)">查看进度</button>
+              <button  tappable (click)="Customerservice(goods5.shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(goods5.orderNo)">确定收货</button>
+            </span>
+            <span *ngSwitchDefault>
+              <button  tappable (click)="Customerservice(goods5.shopid)">申请售后</button>
+            </span>
+          </small>
+                </div>
+            </div>
+
+            <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+            <ion-infinite-scroll (ionInfinite)="doInfiniteAllOrder($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+
+        </div>
+
+
+        <!--<div class="mybooking-more">
+      <h1>
+        <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          店铺名
+        </span>
+        <small>
+          取货码:8888
+        </small>
+      </h1>
+      <p>
+        <span>
+          <label>订单编号：</label>BK282746555664
+        </span>
+        <small>待收货</small>
+      </p>
+      <dl>
+        <dt><img src="assets/img/ningmeng.png" /></dt>
+        <dt><img src="assets/img/ningmeng.png" /></dt>
+        <dt><img src="assets/img/ningmeng.png" /></dt>
+        <dd>...</dd>
+      </dl>
+      <p>
+        <small>共1件商品，需付款：<b>￥45.00</b></small>
+      </p>
+      <div>
+        <button  tappable (click)="goToBookingstatusPage();">查看物流</button>
+        <button>确定收货</button>
+      </div>
+    </div>-->
+
+
+    </div>
+
+
+
+</ion-content>

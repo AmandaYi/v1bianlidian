@@ -1,0 +1,66 @@
+// http://ionicframework.com/docs/v2/theming/
+ion-icon {
+    &[class*="appname-"] {
+        // Instead of using the font-based icons  
+        // We're applying SVG masks  
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        // mask-position: 50% 50%;          
+        background: currentColor;
+        width: 1em;
+        height: 1em;
+    }
+    // custom icons  
+    &[class*="appname-footbar"] {
+        -webkit-mask-image: url(../assets/img/footbar_find_nor@3x.png);
+    }
+    &[class*="appname-my"] {
+        -webkit-mask-image: url(../assets/img/footbar_my_nor@3x.png);
+    }
+    &[class*="appname-store"] {
+        -webkit-mask-image: url(../assets/img/footbar_home_nor@3x.png);
+    }
+    &[class*="appname-share"] {
+        -webkit-mask-image: url(../assets/img/home_share_gry@3x.png);
+    }
+    &[class*="appname-heart"] {
+        -webkit-mask-image: url(../assets/img/home_heart_gry@3x.png);
+    }
+    &[class*="appname-heartYellow"] {
+        -webkit-mask-image: url(../assets/img/home_heart_yellow@3x.png);
+    }
+}
+
+::-webkit-scrollbar {
+    display: none !important;
+}
+
+.tabs-ios .tab-button-icon {
+    min-width: auto;
+}
+
+.header-ios .toolbar-background-ios {
+    border-color:#ccc; 
+    border-width: 0 0 1px 0;
+}
+.picker-ios .picker-toolbar-button:first-child {
+    text-align: left;
+}
+ion-checkbox {
+    button{
+        display: none;
+    }
+}
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.

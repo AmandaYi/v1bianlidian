@@ -1,0 +1,194 @@
+search-bar {
+  // .searchs{
+  //     margin-top: 20px;
+  // }
+  .Search-page {
+    background: #B5B5B5;
+    overflow: hidden;
+    padding: 0.3rem 0;
+    .home_retrieval {
+      width: 80%;
+      float: left;
+      background: #B5B5B5;
+      .searchbar-search-icon {
+        background: url(../assets/img/home_search_gry@3x.png) no-repeat;
+        background-size: 100% 100%;
+        width: 1.4rem;
+        height: 1.4rem;
+        position: absolute;
+        top: 0.7rem;
+        left: 10px;
+      }
+    }
+    .soso {
+      width: 20%;
+      float: left;
+      background: #B5B5B5;
+      color: #fff;
+      font-size: 1.4rem;
+      height: 3.5rem;
+      line-height: 3.5rem;
+      position: relative;
+    }
+    .ionst {
+      display: inline-block;
+      font-size: 3em;
+      position: absolute;
+      left: 17px;
+    }
+  }
+  .non {
+    text-align: center;
+    position: relative;
+    padding-top: 7rem;
+    img {
+      width: 4rem;
+      height: 4rem;
+      margin: 1rem auto;
+    }
+    p {
+      font-size: 1.4rem;
+      color: #9E9E9E;
+    }
+  }
+  .sear {
+    padding: 12px;
+    .List_commoditiesD {
+      display: flex;
+      padding: 6px 0;
+      border-bottom: 1px solid #D8D8D8;
+      .List_commoditiesD2 {
+        width: 5rem;
+        box-sizing: content-box;
+        padding-right: 10px;
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
+      .List_commoditiesD3 {
+        width: 75%;
+        p {
+          display: block;
+          margin-bottom: 6px;
+        }
+        p:nth-child(1) {
+          font-size: 1.6rem;
+          color: #353535;
+        }
+        p:nth-child(2) {
+          font-size: 1.2rem;
+          color: #8B8B8B;
+        }
+        p:nth-child(3) {
+          font-size: 1.3rem;
+          color: #D72227;
+        }
+      }
+      .List_commoditiesD4 {
+        width: 25%;
+        .List_commoditiesD4-Key {
+          margin-top: 2.8rem;
+          span {
+            display: inline-block;
+            width: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            font-size: 1.4rem;
+            padding: 0 0.3rem;
+          }
+          ion-icon {
+            font-size: 2.5rem;
+            position: relative;
+            top: 6px;
+          }
+        }
+      }
+    }
+  } //购物车
+  .ShoppingCart {
+    width: 100%;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    border-top: 1px solid #ccc;
+    .ShoppingCart_l {
+      position: relative;
+      width: 70%;
+      background: #F2F2F2;
+      color: #000000;
+      font-size: 1.4rem;
+      height: 4.5rem;
+      .divimg {
+        padding-top: 0.75rem;
+        margin-left: 0.75rem;
+        width: 3rem;
+        float: left;
+        img {
+          width: 3rem;
+        }
+        .img2 {
+          position: absolute;
+          top: -2rem;
+          width: 4rem;
+        }
+      }
+      .Cart {
+        float: left;
+        margin-left: 1rem;
+        p {
+          line-height: 4.5rem;
+          font-size: 1.4rem;
+        }
+        div {
+          b {
+            display: block;
+            padding-top: 0.5rem;
+            font-size: 1.8rem;
+            color: #d72227;
+            span {
+              margin-left: 6px;
+              font-size: 1.2rem;
+              color: #FE5A02;
+              font-weight: normal;
+            }
+          }
+          small {
+            display: block;
+            font-size: 1.2rem;
+            color: #666;
+            padding-left: 3px;
+          }
+        }
+      }
+    }
+    .allnum {
+      position: absolute;
+      left: 3.5rem;
+      top: -2rem;
+      color: #fff;
+      padding: 0 0.5rem;
+      display: inline-block;
+      height: 1.2rem;
+      line-height: 1.4rem;
+      overflow: hidden;
+      font-size: 1.2rem;
+      border-radius: 0.7rem;
+      background: red;
+      text-align: center;
+    }
+    .ShoppingCart_r {
+      width: 30%;
+      line-height: 4.5rem;
+      background: #A4A4A4;
+      color: #ffffff;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+    .cartdiv {
+      background: #d72227;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>消息</ion-title>
+    <!--<div class="callBack" navPop></div>-->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="message-box content-bg">
+
+  <div>
+    <img src="assets/img/msg-img.jpg" />
+  </div>
+
+  <div *ngIf="inforDatasNull > 0">
+    <dl class="ms-null">
+      <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+      <dd>暂无消息！</dd>
+    </dl>
+  </div>
+
+  
+  <div *ngIf="inforDatas > 0">
+    <dl *ngFor="let m of mags" class="ms-true">
+      <dt>
+        <span>{{m.sender}}</span>{{m.createtime}}
+      </dt>
+      <dd>
+        <h1>{{m.title}}</h1>
+        <p>{{m.details}}</p>
+      </dd>
+    </dl>
+  </div>
+
+
+  
+
+  <!--<dl>
+      <dt>
+        <span>系统消息</span>2017-05-06 18:30
+      </dt>
+      <dd>
+        <h1>国际早班车：美国昨晚传来两大</h1>
+        <p>周三(4月26日)，美国公布“史上最大”税改计划，特朗普或签署退出NAFTA政令</p>
+      </dd>
+  </dl>-->
+</ion-content>

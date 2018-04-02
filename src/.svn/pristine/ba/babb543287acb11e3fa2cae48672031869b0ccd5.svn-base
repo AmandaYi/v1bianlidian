@@ -1,0 +1,48 @@
+page-bookingstatus {
+
+}
+
+.booking-status {
+        padding:2rem 0 2rem 2rem;
+    
+        dl {
+            position:relative;
+            display: block;
+            border-left:1px solid #ccc;
+            padding-left:24px;
+            
+            font-size:1.2rem;
+            dt {
+                padding: 0.5rem 12px 0.5rem 0;
+                
+                i {
+                    position: absolute;
+                    width:9px;
+                    height:9px;
+                    border-radius: 5px;
+                    background: #d72227;
+                    left:-5px;
+                    top:1rem;
+                }
+                b {
+                    font-size:1.4rem;
+                    color:#333;
+                }
+                span {
+                    float: right;
+                    color:#999;
+                }
+            }
+
+            dd {
+                display: block;
+                padding-bottom: 0.5rem;
+                padding-right:12px;
+                border-bottom:1px dotted #ccc;
+                color: #666;
+                
+            }
+
+        }
+    
+}

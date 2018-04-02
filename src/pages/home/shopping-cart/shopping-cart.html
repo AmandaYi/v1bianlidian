@@ -1,0 +1,59 @@
+<ion-header class="Shoppingca">
+  <ion-navbar>
+    <ion-title>购物车</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background: #f2f2f2;">
+  <header class="shopping">
+    <div class="shopping_her">
+      <ion-checkbox [(ngModel)]="select" class="Select" checked="true" (click)="checkSelect()"></ion-checkbox>
+      <p>全选</p>
+    </div>
+    <div class="shopping_del" tappable (click)="delete()">
+      <p>删除所选</p>
+    </div>
+  </header>
+  <section class="List_commodities">
+    <p class="nullShop" *ngIf="total==0">
+      购物车是空的哟~
+    </p>
+    <div *ngIf="total>0">
+      <div class="List_commoditiesD" *ngFor="let list of rows;let i=index">
+        <div class="List_commoditiesD1">
+          <ion-checkbox class="List_commoditiesD1-check" checked="true" (ionChange)="notify($event,list.car.shopcarId,list)" [(ngModel)]="tis[i]"></ion-checkbox>
+        </div>
+        <div class="List_commoditiesD2">
+          <img [src]="list.prod.mainpic" alt="">
+        </div>
+        <div class="List_commoditiesD3">
+          <p tappable (click)="commodityDetails(list.car.itemid)">{{list.prod.name}}</p>
+          <p tappable (click)="commodityDetails(list.car.itemid)">{{list.prod.ctitle}}</p>
+          <p tappable (click)="commodityDetails(list.car.itemid)" *ngIf="list.prod.aprice==undefined">￥{{list.prod.sprice}}</p>
+          <p tappable (click)="commodityDetails(list.car.itemid)" *ngIf="list.prod.aprice!=undefined">￥{{list.prod.aprice}}<b>活动价</b></p>
+          <div class="List_commoditiesD4">
+            <div class="List_commoditiesD4-Key">
+              <ion-icon tappable name="remove-circle" style="color: #ccc;" (tap)="countChanges(list,1,i)"></ion-icon>
+              <span>{{list.car.productQty}}</span>
+              <ion-icon tappable name="add-circle" style="color: #FEB402" (tap)="countChanget(list,1,i)"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</ion-content>
+<ion-footer>
+  <footer class="Settlement">
+    <div class="Settlement1">
+      <p>共计<b>{{nB}}</b>件</p>
+    </div>
+    <div class="Settlement2">
+      <p>需付款：<b>￥{{orderz}}</b></p>
+    </div>
+    <div class="Settlement3" tappable (click)="initlist()">
+      <p>去付款</p>
+    </div>
+  </footer>
+</ion-footer>

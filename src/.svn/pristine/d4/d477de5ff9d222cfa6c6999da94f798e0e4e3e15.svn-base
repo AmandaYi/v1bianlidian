@@ -1,0 +1,116 @@
+<ion-header class="Orderdetails">
+
+  <ion-navbar>
+    <ion-title>订单详情</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="booking-detail-box content-bg">
+  <div class="bd-list">
+    <h1>
+      <span>
+          <i><img src="assets/img/home_search_empty@3x.png" /></i>
+          {{shopName}}
+        </span>
+      <!--<small></small>-->
+    </h1>
+
+    <dl *ngFor="let pro of odProductList">
+      <dt>
+        <font class="list">{{pro.productName}}</font><i>×{{pro.productQty}}</i></dt>
+      <dd>￥{{pro.salePrice}}</dd>
+    </dl>
+
+    <!--<dl>
+      <dt><span>配送费</span></dt>
+      <dd>￥6.00</dd>
+    </dl>-->
+
+    <dl>
+      <dt><span>共计￥{{orderTotalprice}}</span><span>优惠￥<small *ngIf="usedCouponAmount>0">{{usedCouponAmount}}</small><small *ngIf="usedCouponAmount==null">0</small></span></dt>
+      <dd>实付:<b>￥{{paidIn}}</b></dd>
+    </dl>
+  </div>
+
+  <div class="address-info-box">
+    <h1>
+      <span>配送信息</span>
+      <small [ngSwitch]="transportType">
+        <i *ngSwitchCase="0">配送</i>
+        <i *ngSwitchCase="1">自提</i>
+        </small>
+    </h1>
+    <dl>
+      <dt><img src="assets/img/home_boy@3x.png" /></dt>
+      <dd>
+        <b>{{userName}}</b>
+        <b>{{userMobile}}</b>
+      </dd>
+    </dl>
+    <dl>
+      <dt><img src="assets/img/home_address_gry@3x.png" /></dt>
+      <dd>{{userAddress}}</dd>
+    </dl>
+    <dl>
+      <dt><img src="assets/img/home_time@3x.png" /></dt>
+      <dd>
+        <span>配送时间</span>
+        <span>{{transportStartTime|date:"MM-dd HH:mm"}} - {{transportEndTime|date:"MM-dd HH:mm"}}</span>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="booking-info-list">
+    <h1>
+      <span>订单信息</span>
+    </h1>
+
+    <dl>
+      <dt>订单编号：</dt>
+      <dd>{{orderNo}}</dd>
+    </dl>
+    <dl>
+      <dt>支付方式：</dt>
+      <dd>在线支付</dd>
+    </dl>
+    <dl>
+      <dt>付款时间：</dt>
+      <dd>{{payTime}}</dd>
+    </dl>
+    <dl>
+      <dt>订单备注：</dt>
+      <dd>{{orderMessage}}</dd>
+    </dl>
+  </div>
+
+
+</ion-content>
+
+<ion-footer>
+  <div class="submit-bar03">
+    <small [ngSwitch]="orderStatus">
+            <span *ngSwitchCase="1">
+              <button  tappable (click)="openPay(orderNo)">去支付</button>
+            </span>
+            <span *ngSwitchCase="3">
+              <button  tappable (click)="goToBookingstatusPage(orderNo)">查看进度</button>
+              <button  tappable (click)="Customerservice(shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(orderNo)">确定收货</button>
+            </span>
+            <span *ngSwitchCase="4">
+              <button  tappable (click)="Customerservice(shopid)">申请售后</button>
+              <button  tappable (click)="goToAppraisePage(shopid,passId,orderNo)">去评价</button>
+            </span>
+            <span *ngSwitchCase="6">
+              <button  tappable (click)="goToBookingstatusPage(orderNo)">查看进度</button>
+              <button  tappable (click)="Customerservice(shopid)">申请售后</button>
+              <button  tappable (click)="confirmOrder(orderNo)">确定收货</button>
+            </span>
+            <span *ngSwitchDefault>
+              <button  tappable (click)="Customerservice(shopid)">申请售后</button>
+            </span>
+          </small>
+  </div>
+</ion-footer>

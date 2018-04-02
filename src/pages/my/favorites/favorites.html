@@ -1,0 +1,82 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>我的收藏</ion-title>
+  </ion-navbar>
+  <div class="faFixedBar2">
+
+    <ion-segment [(ngModel)]="myFavoritesBox">
+      <ion-segment-button value="queryFavoritesProd" tappable (click)="queryFavoritesProd();">
+        商品
+      </ion-segment-button>
+      <ion-segment-button value="queryFavoritesShop" tappable (click)="queryFavoritesShop();">
+        店铺
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-header>
+
+
+<ion-content class="favorites-box content-bg" style="margin-top:1rem;">
+
+  <div [ngSwitch]="myFavoritesBox">
+
+    <!--//查询未使用-->
+    <div *ngSwitchCase="'queryFavoritesProd'">
+      <dl class="fa-null" *ngIf="!prodLenghth>0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>您还没有收藏哦！</dd>
+      </dl>
+      <div class="fa-list" *ngIf="prodLenghth>0">
+        <div class="fa-true">
+          <dl class="goods" *ngFor="let pl of prodList">
+            <dt tappable (click)="commodityDetails(pl.itemid);">
+              <img [src]="pl.prod.mainpic" />
+            </dt>
+            <dd>
+              <p tappable (click)="commodityDetails(pl.prod.itemid);">{{pl.prod.name}}</p>
+              <p><small>￥{{pl.prod.price}}</small><small>月销{{pl.prod.saleNum}}</small></p>
+              <p><span>￥{{pl.prod.sprice}}</span>
+                <!--<font #bid>dafdsf{{pl.collection.bid}}</font>-->
+              </p>
+              <i tappable (click)="cancelFavoriteProd(pl.collection.bid)"><img src="assets/img/my_modify_del@3x.png"/></i>
+            </dd>
+          </dl>
+          <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+          <ion-infinite-scroll (ionInfinite)="doInfiniteProd($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'queryFavoritesShop'">
+      <dl class="fa-null" *ngIf="!shopLenghth>0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>您还没有收藏哦！</dd>
+      </dl>
+      <div class="fa-list" *ngIf="shopLenghth>0">
+        <div class="fa-true">
+          <dl class="shop" *ngFor="let sl of shopList">
+            <dt>
+              <img [src]="sl.store.mainpic" />
+            </dt>
+            <dd>
+              <p>{{sl.store.name}}</p>
+              <p><small>地址：{{sl.store.areaname}}{{sl.store.addr}}</small></p>
+              <i tappable (click)="cancelFavoriteShop(sl.collection.bid)"><img src="assets/img/my_modify_del@3x.png"/></i>
+            </dd>
+          </dl>
+          <div class="dixian" *ngIf="dixian>0">-------我也有底线-------</div>
+          <ion-infinite-scroll (ionInfinite)="doInfiniteShop($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载数据中... ..." threshold="10%"></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

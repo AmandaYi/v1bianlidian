@@ -1,0 +1,82 @@
+<ion-header class="star">
+  <ion-navbar>
+    <ion-title>店铺选择</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background: #f2f2f2;">
+  <header class="cits">
+    <div class="cits-weizhi" *ngIf="formattedAddress">
+      <img src="assets/img/home_address_gry@3x.png" alt="">
+      <p>{{formattedAddress}}&nbsp;</p>
+    </div>
+    <div class="cits-locat" tappable (click)="Reposition()" *ngIf="!formattedAddress">
+      <img src="assets/img/home_ position@3x.png" alt="">
+      <span>获取定位失败</span>
+    </div>
+  </header>
+  <!-- <div *ngIf="locat">
+    <header class="citys">
+      <div class="citys-locat" tappable (click)="current()">
+        <img src="assets/img/home_ position@3x.png" alt="">
+        <span>定位当前位置</span>
+      </div>
+    </header>
+    <section class="citys-inf">
+      <div>已选择城市</div>
+      <button ion-button color="danger" outline>深圳市</button>
+    </section>
+    <section class="urban_district">
+      <div>市区</div>
+      <div *ngFor="let data of districtL">
+        <button ion-button outline tappable (click)="seles=data" [class.but_color]="data==seles">{{data.name}}</button>
+      </div>
+    </section>
+  </div> -->
+
+  <section class="Distribution">
+    <span>1公里内免费配送，超出范围只能自提。</span>
+  </section>
+
+  <section class="Supermarket">
+    <div class="nearby">附近的超市</div>
+    <ion-list *ngIf="CloudInf==undefined&&StoreInf!=undefined">
+      <ion-item *ngFor="let lis of StoreInf">
+        <ion-thumbnail item-left *ngIf="lis._image.length==0">
+          <img src="assets/img/chaoshi.png">
+        </ion-thumbnail>
+        <ion-thumbnail item-left *ngFor="let data of lis._image">
+          <img [src]="data._url" *ngIf="lis._image.length>=1">
+        </ion-thumbnail>
+        <dl class="shop" tappable (click)="Supermarket(lis.shopid,lis._city)">
+          <dt>{{lis._name}}</dt>
+          <!--<dd>{{lis._distance}}米</dd>-->
+        </dl>
+        <p tappable (click)="Supermarket(lis.shopid,lis._city)">电话：{{lis.telephone}}</p>
+        <p tappable (click)="Supermarket(lis.shopid,lis._city)">地址：{{lis._address}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="CloudInf!=undefined&&CloudInf!=null">
+      <ion-item *ngFor="let lis of CloudInf">
+        <ion-thumbnail item-left *ngIf="lis._image.length==0">
+          <img src="assets/img/chaoshi.png">
+        </ion-thumbnail>
+        <ion-thumbnail item-left *ngFor="let data of lis._image">
+          <img [src]="data._url" *ngIf="lis._image.length>=1">
+        </ion-thumbnail>
+        <dl class="shop" tappable (click)="Supermarket(lis.shopid,lis._city)">
+          <dt>{{lis._name}}</dt>
+          <dd>{{lis._distance}}米</dd>
+        </dl>
+        <p tappable (click)="Supermarket(lis.shopid,lis._city)">电话：{{lis.telephone}}</p>
+        <p tappable (click)="Supermarket(lis.shopid,lis._city)">地址：{{lis._address}}</p>
+      </ion-item>
+    </ion-list>
+
+    <!--<div *ngIf="StoreInf==undefined">
+            <p class="weizhi">您当前位置离店铺太远了，无法给你推荐店铺了</p>
+        </div>-->
+  </section>
+  <!--<navi-map></navi-map>-->
+</ion-content>

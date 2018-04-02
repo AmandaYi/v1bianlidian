@@ -1,0 +1,114 @@
+page-register {
+
+}
+
+#regStyle {
+    .header-ios .toolbar-ios:last-child .toolbar-background-ios{
+        border-bottom:1px solid #bfbfbf;
+    }
+    ion-input {
+        border-radius: 5px;
+        background: #fff;
+    }
+    .text-input-ios {padding:3px 0;font-size:1.4rem;}
+    .list-ios .item-block .item-inner {border: 0;border-bottom: 1px solid #bfbfbf;}
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+        border: 0;
+    }
+    .list-ios{
+        margin: 0;
+    }
+    .item-ios {
+        padding-left:0;
+        font-size:1.4rem;
+    }
+    .item-ios.item-block .item-inner {
+        padding-right: 0;
+    }
+
+    .list-ios > .item-block:first-child {
+        border-top:0;
+    }
+    
+    .listInputBox {
+        position: relative;
+        div.otherTools {
+            position: absolute;
+            right:0; 
+            top:8px;
+            span{
+                width:3rem;
+                height:3rem;
+                display: block;
+                float: right;
+                img {
+                    width:100%;
+                }
+            }
+
+            .clearInput{
+                display: none;
+            }
+
+        }
+        .sendCode {
+            position: absolute;
+            right:0; 
+            top:1rem;
+            height:2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            border:1px solid #D73338;
+            background: #fff;
+            color:#D73338;
+            padding:0 10px;
+            text-align: center;
+        }
+        .sendCode2 {
+            position: absolute;
+            right:0; 
+            top:1rem;
+            height:2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            border:1px solid #ccc;
+            background: #fff;
+            color:#666;
+            padding:0 10px;
+            text-align: center;
+        }
+
+        .dis {
+            display: none;
+        }
+
+        .input-has-value + div.otherTools > .clearInput{
+                display: block;
+        }
+    }
+     
+
+    .button-ios {
+        width: 80%;
+        display: block;
+        padding: 0;
+        margin:5rem 10%;
+        }
+      
+    #noneLine {
+        .item-inner{
+        border-bottom:0;
+        font-size:1.4rem;
+        }
+        .checkbox-ios{
+            margin-right:5px;
+        }
+    }
+
+    .tips {
+        text-align: center;
+        font-size:1.2rem;
+        line-height: 3rem;
+    }
+
+}

@@ -1,0 +1,246 @@
+commodity-details {
+    .other-button {
+        button {
+            float: right;
+        }
+    }
+    .details {
+        .details_Carousel {
+            height: 27rem;
+            img {
+                width: 100%;
+            }
+        }
+        .details_information {
+            width: 100%;
+            .details_Price {
+                padding: 1rem 12px;
+                span {
+                    font-size: 1.8rem;
+                    display: inline-block;
+                    width: 100%;
+                    color: #d72227;
+                    font-weight: bold;
+                    b {
+                        display: inline-block;
+                        font-size: 1.2rem;
+                        margin-left: 20px;
+                        color: #666;
+                        font-weight: normal;
+                        text-decoration: line-through;
+                    }
+                    .apr {
+                        color: #d72227;
+                        font-size: 1.5rem;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .details_remarks {
+                padding: 0 12px;
+                span {
+                    font-size: 1.4rem;
+                    font-weight: bold;
+                    display: inline-block;
+                }
+            }
+        }
+        .particulars {
+            margin-top: 2rem;
+            p {
+                height: 3rem;
+                line-height: 3rem;
+                font-size: 1.4rem;
+                color: #333;
+                text-align: center;
+                background: #f3f3f3;
+            }
+        }
+    }
+    .Commodity {
+        border-top: 0.55px solid rgba(0, 0, 0, 0.05);
+        border-bottom: 0.55px solid #BEBEBE;
+        padding: 12px;
+        dl {
+            padding-top: 5px;
+            dt {
+                display: inline-block;
+                width: 22%;
+                vertical-align: top;
+                color: #999;
+            }
+            dd {
+                display: inline-block;
+                width: 70%;
+                vertical-align: top;
+                color: #000;
+            }
+        }
+        .CommodityCode {
+            padding-bottom: 5px;
+        }
+        .Store {
+            margin-top: 12px;
+            border-top: 1px dotted #ccc;
+            border-bottom: 1px dotted #ccc;
+            width: 100%;
+            padding: 12px 0;
+            display: flex;
+            .Store_img {
+                margin: 5px 12px 0 0;
+                img {
+                    width: 5rem;
+                    display: block;
+                }
+            }
+            .Store_info {
+                p {
+                    color: #353535;
+                }
+                p:nth-child(1) {
+                    font-weight: bold;
+                    font-size: 1.6rem;
+                }
+                p:nth-child(2) {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+    .descpics {
+        border-top: 0.55px solid rgba(0, 0, 0, 0.05);
+        padding: 12px 0;
+        img {
+            width: 100%;
+        }
+    }
+    .Bullet_Sharing {
+        z-index: 100;
+        background: #fff;
+        position: absolute;
+        top: 46px;
+        right: 2px;
+        img {
+            float: left;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
+    .Commodity_footer {
+        border-top: 1px solid #ccc;
+        background: #F2F2F2;
+        box-sizing: border-box;
+        height: 4.5rem;
+        .Commodity_footimg {
+            float: left;
+            .img2 {
+                position: absolute;
+                left: 12px;
+                top: -50%;
+                width: 4rem;
+            }
+            .img1 {
+                position: absolute;
+                left: 12px;
+                top: 0%;
+                width: 4rem;
+            }
+            .allnum {
+                position: absolute;
+                left: 3.5rem;
+                top: -2rem;
+                color: #fff;
+                padding: 0 0.5rem;
+                display: inline-block;
+                height: 1.2rem;
+                line-height: 1.4rem;
+                overflow: hidden;
+                font-size: 1.2rem;
+                border-radius: 0.7rem;
+                background: red;
+                text-align: center;
+            }
+        }
+        .Commodity_footbut {
+            float: right;
+            margin: 0.75rem 12px 0 0;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-around;
+            button {
+                margin: 0 0 0 10px;
+                width: 47%;
+                height: 3rem;
+                text-align: center;
+                background: #D73338;
+            }
+            .button-ios {
+                padding: 0;
+                width: 10rem;
+            }
+        }
+    }
+    .ShoppingCart_l {
+        position: relative;
+        background: #F2F2F2;
+        color: #000000;
+        font-size: 1.4rem;
+        height: 4.8rem;
+        .divimg {
+            padding-top: 0.75rem;
+            margin-left: 0.75rem;
+            width: 3rem;
+            float: left;
+            img {
+                width: 3rem;
+            }
+            .img2 {
+                position: absolute;
+                top: -2rem;
+                width: 4rem;
+            }
+        }
+        .Cart {
+            float: left;
+            margin-left: 1rem;
+            p {
+                line-height: 4.5rem;
+                font-size: 1.4rem;
+            }
+            div {
+                b {
+                    display: block;
+                    font-size: 1.8rem;
+                    color: #d72227;
+                    span {
+                        margin-left: 6px;
+                        font-size: 1.2rem;
+                        color: #FE5A02;
+                        font-weight: normal;
+                    }
+                }
+                small {
+                    display: block;
+                    font-size: 1.2rem;
+                    color: #666;
+                    padding-left: 3px;
+                }
+            }
+        }
+    }
+    .allnum {
+        position: absolute;
+        left: 3.5rem;
+        top: -2rem;
+        color: #fff;
+        padding: 0 0.5rem;
+        display: inline-block;
+        height: 1.2rem;
+        line-height: 1.4rem;
+        overflow: hidden;
+        font-size: 1.2rem;
+        border-radius: 0.7rem;
+        background: red;
+        text-align: center;
+    }
+}

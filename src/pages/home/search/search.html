@@ -1,0 +1,74 @@
+<ion-header class="searchs">
+  <ion-navbar>
+    <ion-title>搜索</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <header class="Search-page">
+    <!--[(ngModel)]="myInput"  (ionCancel)="onCancel($event)" -->
+    <!--<ion-searchbar (ionInput)="getItems($event)" [showCancelButton]="shouldShowCancel" class="home_retrieval" placeholder="搜索商品" [(ngModel)]="myInput" debounce="1000"></ion-searchbar>
+        <button class="soso" tappable (tap)="Search()">搜索</button>-->
+    <form action="javascript:return true;">
+      <ion-row>
+        <ion-input mode="ios" [(ngModel)]="search" type="search" placeholder="搜索商品" [ngModelOptions]="{standalone: true}" (keyup)="onSearchKeyUp($event)"></ion-input>
+        <div  class="soso" (click)="searchBt()">
+          <ion-icon ios="ios-search" md="md-search" class="ionst"></ion-icon>
+        </div>
+      </ion-row>
+    </form>
+  </header>
+  <section class="non" *ngIf="existence==1">
+    <img src="assets/img/home_search_empty@3x.png" alt="">
+    <p>暂时没有找到你想要的东西</p>
+  </section>
+  <section class="sear" *ngIf="existence==2">
+    <div class="List_commoditiesD" *ngFor="let lis of docslis">
+      <div class="List_commoditiesD2" tappable (click)="details(lis.docid)">
+        <img [src]="lis.mainpic" alt="">
+      </div>
+      <div class="List_commoditiesD3" tappable (click)="details(lis.docid)">
+        <p>{{lis.contents.name}}</p>
+        <p>{{lis.contents.ctitle}}</p>
+        <!--<p>{{lis.prices.split(',')[0]}}</p>-->
+        <p *ngIf="lis.prices.split(',')[2]==0">{{lis.prices.split(',')[1]}}</p>
+        <p *ngIf="lis.prices.split(',')[2]>0">{{lis.prices.split(',')[2]}}</p>
+      </div>
+      <!--<div class="List_commoditiesD4">
+                <div class="List_commoditiesD4-Key">
+                    <ion-icon tappable name="remove-circle" style="color: #ccc;" (tap)="reduce(lis.docid)"></ion-icon>
+                    <span class="home_j-num">
+                         <ul  *ngFor="let o of orderInfo.docs">
+                             <li *ngIf="o.typInfo.docid==lis.docid" style="border-bottom: 1px solid #000000;">{{o.sum}}</li>
+                         </ul>
+                                
+                     </span>
+                    <ion-icon tappable name="add-circle" style="color: #FEB402" (tap)="plus($event,lis.docid)"></ion-icon>
+                </div>
+            </div>-->
+    </div>
+
+  </section>
+  <!--<footer class="ShoppingCart">
+        <div class="ShoppingCart_l"  tappable (click)="ShoppingCart()">
+            <div class="ocart">
+                <div class="divimg">
+                    <img class="img1" src="assets/img/home_shop_gry@3x.png" *ngIf="!totalCount">
+                    <img class="img2" src="assets/img/home_shop_yellow@3x.png" *ngIf="totalCount">
+                    <div class="allnum" id="allnum" *ngIf="totalCount">{{totalCount}}</div>
+                </div>
+                <div class="Cart">
+                    <p *ngIf="totalCount">购物车是空的</p>
+                    <div id="tPrice" *ngIf="totalCount">
+                        <b>￥{{totalPrice}}<span>(配送费:￥8元)</span></b>
+                        <small>满69元，免邮费</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ShoppingCart_r"  tappable (click)="openConfirmOrder()" [class.cartdiv]="totalCount>=1">
+            <span>去结算</span>
+        </div>
+    </footer>-->
+</ion-content>

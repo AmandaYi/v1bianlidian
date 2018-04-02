@@ -1,0 +1,149 @@
+page-logintest {
+
+}
+
+.login {
+    // .item-ios {
+    //     padding-left:0!important;
+    // }
+
+    
+}
+
+
+// .star {
+//     list-style: none;
+//     li {
+//     width:3rem;
+//     height:3rem;
+//     display: inline-block;
+//     background: url(../assets/img/ico/order_details_star_gry@3x.png) no-repeat;
+//     background-size: 100% 100%;
+//     }
+//     .sel {
+//         background: url(../assets/img/ico/order_details_star_yellow@3x.png) no-repeat;
+//         background-size: 100% 100%;
+//     }
+// }
+
+.LoginTest {
+    .item-ios {
+        padding-left:0;
+        margin-bottom:6px;
+    }
+
+    .listInputBox {
+        position: relative;
+        div.otherTools {
+            position: absolute;
+            right:0; 
+            top:8px;
+            span{
+                width:3rem;
+                height:3rem;
+                display: block;
+                float: right;
+                img {
+                    width:100%;
+                }
+            }
+            .clearInput{
+                display: none;
+            }
+            
+        }
+        div.sendCode {
+            position: absolute;
+            right:0; 
+            top:1rem;
+            height:2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            border:1px solid #D73338;
+            color:#D73338;
+            padding:0 10px;
+        }
+
+        .input-has-value + div.otherTools > .clearInput{
+                display: block;
+        }
+
+    }
+}
+
+ion-input {
+        border-radius: 5px;
+        background: #f4f4f4;
+        font-size:1.4rem;
+    }
+.text-input-ios {padding:3px 10px;}
+.list-ios .item-block .item-inner {border: 0;}
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border: 0;
+}
+
+.list-ios{
+    margin: 0;
+}
+
+
+.item-ios.item-block .item-inner {
+    padding-right: 0;
+}
+
+.list-ios > .item-block:first-child {
+    border-top:0;
+}
+
+.logoImg {
+    width:6rem;
+    height:6rem;
+    margin:4rem auto;
+}
+.logoImg img {
+    display: block;
+    width: 100%;
+}
+
+.loginButSet {
+    padding-top: 3rem;
+    width:80%;
+    margin:auto;
+}
+.regButSet {
+    width:80%;
+    margin:auto;
+}
+
+.login-line {
+    position:relative;
+    margin: 3rem auto 0 auto;
+    height:1px;
+    background: #eee;
+
+    span {
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+    left:50%;
+    margin-left:-5rem;
+    margin-top:-1rem;
+    top:50%;
+    width:10rem;
+    height:2rem;
+    line-height: 2rem;
+    text-align: center;
+    }
+
+    div {
+        width:4rem;
+        height:4rem;
+        padding-top:2rem;
+        margin:auto;
+        img {
+           display: block;
+           width: 100%; 
+        }
+    }
+}
+

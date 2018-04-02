@@ -1,0 +1,286 @@
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { AppConfig } from '../../../app/app.config';
+import { Ajax } from '../../../app/ajax';
+import { OrderSubmission } from "../order-submission/order-submission";
+import { Variable } from "../../../global/variable";
+import { CommodityDetails } from "../commodity-details/commodity-details";
+import { AppGlobal } from "../../../AppGlobal";
+@Component({
+  selector: 'shopping-cart',
+  templateUrl: 'shopping-cart.html'
+})
+export class ShoppingCart {
+
+
+  rows: any; // 购物车列表数据
+  total: number;
+  Ait = new Set([]);  // 商品数组
+  Aqt = new Set([]); // 数量数组
+  supermarsel: any = '';
+  sausage: boolean; // 全选
+  select: boolean;
+  //创建一个长度为total的默认值为false的数组
+  tis: any;
+  arr = new Set([]);//存储value,key不能重复
+  carGoodsIdNum: any = [];//存放购物车商品数量和ID
+  carPile: any = [];//存放购物车
+  newData: any;
+  carsum: any[];
+  orderz: number; // 订单总价
+  nB: number;//购物车选中的总数量
+  bid: number;//判断是否是活动价
+  act: any[];
+  Carlis = new Set([]);
+
+  constructor(
+    public navCtrl: NavController,
+    public params: NavParams,
+    private ajax: Ajax,
+    public cd: ChangeDetectorRef,
+    public appGlobal: AppGlobal,
+  ) {
+    this.bid = this.params.get('bid');
+  }
+  ionViewDidEnter() {
+    this.nB = 0;
+    this.orderz = this.appGlobal.returnFloat(0.00);
+  }
+
+
+  ionViewWillEnter() {
+    this.getShopcarNum()
+
+    this.Carlis = new Set([]);
+    this.appGlobal.oNclose(1000);
+    // this.hided()
+  }
+
+  getShopcarNum() {//获取购物车数量和列表
+    var tokenId = localStorage.getItem('tokenId');
+    this.params.get('data');
+    this.carGoodsIdNum = [];//存放购物车商品数量和ID
+    this.carPile = [];//存放购物车
+
+    // 购物车列表 
+    this.ajax.get(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/list', { shopid: Variable.getInstance().shopid, page: 0, size: 50, tokenid: tokenId })
+      .toPromise()
+      .then(response => {
+        this.rows = response.json().rows;
+        this.total = response.json().total;
+        this.tis = 'x'.repeat(this.total).split('').map(() => false);
+      })
+  }
+
+  // 全选
+  checkSelect() {
+    if (this.select == true) {
+      for (let i = 0; i < this.tis.length; i++) {
+        this.tis[i] = true;
+      }
+    } else {
+      for (let i = 0; i < this.tis.length; i++) {
+        this.tis[i] = false;
+      }
+    }
+  }
+  // 删除所选
+  delete() {
+    var tokenId = localStorage.getItem('tokenId');
+    let zhanhua = '';
+    this.arr.forEach(function (element, index, array) {
+      zhanhua += element + ',';
+    })
+    if (zhanhua.length > 0) {
+      // 删除选中的购物车
+      this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/delete/' + zhanhua, { tokenid: tokenId })
+        .toPromise()
+        .then(response => {
+          response.json().data;
+          this.rows = response.json().rows;
+          this.getShopcarNum()
+          this.cd.markForCheck();
+          this.select = false;
+          this.orderz = 0.00;
+          this.nB = 0;
+          this.Carlis = new Set([]);
+        })
+    }
+
+
+  }
+
+  ionViewDidLeave() {
+    this.select = false;
+  }
+
+  //点击拿值
+  notify(event, shopcarId, list) {
+    // 每次点击的状态ture  false
+    if (event.checked === true) {
+      this.arr.add(shopcarId);
+      this.Carlis.add(list)
+      this.carsum = Array.from(this.Carlis);
+      this.calculated();
+    } else {
+      this.arr.delete(shopcarId);
+      this.Carlis.delete(list)
+      this.carsum = Array.from(this.Carlis);
+      this.select = false;
+      this.calculated();
+    }
+
+  }
+  //计算值
+  calculated() {
+    this.carPile = [];
+    this.act = [];
+    this.orderz = 0.00;
+    this.nB = 0;
+    let sum = 0.00;
+    for (let i = 0; i < this.carsum.length; i++) {
+      this.nB += this.carsum[i].car.productQty;
+      this.carPile.push({
+        ids:this.carsum[i].prod.itemid,
+        id: this.carsum[i].prod.pid,
+        num: this.carsum[i].car.productQty,
+        name: this.carsum[i].prod.name,
+        title: this.carsum[i].prod.ctitle,
+        sprice: this.carsum[i].prod.sprice,
+        actId: this.carsum[i].prod.actid,
+        aprice: this.carsum[i].prod.aprice,
+        stockN: this.carsum[i].prod.stocknum
+      })
+    }
+    for (let i = 0; i < this.carPile.length; i++) {
+      if (this.carPile[i].aprice != null) {
+        sum += (this.carPile[i].num * this.carPile[i].aprice || this.carPile[i].sprice) * 100;
+      } else {
+        sum += (this.carPile[i].num * this.carPile[i].sprice) * 100;
+      }
+    }
+    this.orderz = this.appGlobal.returnFloat(sum / 100);// 订单总价
+  }
+
+
+  commodityDetails(data) {//跳商品详情
+    this.navCtrl.push(CommodityDetails, { itemid: data });
+  }
+  // 删除按钮
+  countChanges(ref, count, index) {
+    if (this.nB > 0) {
+      for (let i = 0; i < this.carsum.length; i++) {
+        if (ref.car.itemid == this.carsum[i].car.itemid) {
+          this.carsum[i].car.productQty -= count;
+          if (ref.car.productQty <= 0) {
+            ref.car.productQty = 1;
+          }
+        }
+      }
+      this.calculated()
+      var tokenId = localStorage.getItem('tokenId');
+      if (ref.car.productQty > 0) {
+        this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add?method=decrease', { itemid: ref.car.itemid, productQty: count, tokenid: tokenId })
+          .toPromise()
+          .then(response => {
+          })
+      } else {
+        ref.car.productQty = 1;
+      }
+    } else {
+      var tokenId = localStorage.getItem('tokenId');
+      if (ref.car.productQty > 1) {
+        this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add?method=decrease', { itemid: ref.car.itemid, productQty: count, tokenid: tokenId })
+          .toPromise()
+          .then(response => {
+            ref.car.productQty -= count;
+          })
+      } else {
+        ref.car.productQty = 1;
+      }
+    }
+
+
+  }
+  // 添加
+  countChanget(ref, count, index) {
+    if (this.nB != 0) {
+      for (let i = 0; i < this.carsum.length; i++) {
+        if (ref.car.itemid == this.carsum[i].car.itemid) {
+          this.carsum[i].car.productQty += count;
+        }
+      }
+      this.calculated();
+      var tokenId = localStorage.getItem('tokenId');
+      if (ref.car.productQty > 0) {
+        this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add', { itemid: ref.car.itemid, productQty: count, tokenid: tokenId })
+          .toPromise()
+          .then(response => {
+          })
+      }
+    } else {
+      var tokenId = localStorage.getItem('tokenId');
+      if (ref.car.productQty > 0) {
+        this.ajax.post(AppConfig.getDebugUrl + '/api/shop/shopcar/odShopcarDetail/add', { itemid: ref.car.itemid, productQty: count, tokenid: tokenId })
+          .toPromise()
+          .then(response => {
+            ref.car.productQty += count;
+          })
+      }
+    }
+
+  }
+  initlist() {
+    let aaa = [];
+    // let actid = [];
+    if (this.nB == 0) {//为空返回
+      alert('未选中商品')
+      return;
+    }
+    this.carGoodsIdNum = [];
+    for (let i = 0; i < this.carPile.length; i++) {
+      if (this.carPile[i].stockN != 0) {
+        if (this.carPile[i].stockN >= this.carPile[i].num) {
+          if (this.carPile[i].actId == null) {
+            this.carGoodsIdNum.push({ id: this.carsum[i].prod.itemid, num: this.carsum[i].car.productQty })
+            aaa.push({
+              ids:this.carsum[i].prod.itemid,
+              id: this.carsum[i].prod.pid,
+              num: this.carsum[i].car.productQty,
+              name: this.carsum[i].prod.name,
+              title: this.carsum[i].prod.ctitle,
+              sprice: this.carsum[i].prod.sprice,
+              act: null,
+              isUseActivity: 0
+            })
+          } else {
+            this.carGoodsIdNum.push({ id: this.carsum[i].prod.itemid, num: this.carsum[i].car.productQty })
+            aaa.push({
+              ids:this.carsum[i].prod.itemid,
+              id: this.carsum[i].prod.pid,
+              num: this.carsum[i].car.productQty,
+              name: this.carsum[i].prod.name,
+              title: this.carsum[i].prod.ctitle,
+              sprice: this.carsum[i].prod.aprice,
+              act: this.carsum[i].prod.actid,
+              isUseActivity: 1
+            })
+          }
+        } else {
+          alert(this.carPile[i].name+'该商品数量不足')
+          return;
+        }
+      } else {
+        alert(this.carPile[i].name+'该商品售空')
+        return;
+      }
+    }
+    this.navCtrl.push(OrderSubmission, { carPile: aaa, carGoodsIdNum: this.carGoodsIdNum, flag: 1 });
+  }
+
+  // hided(){//触发首页隐藏
+  //   let hid=0;
+  //   <any>window.parent.postMessage(hid, "*");
+  // }
+}
+

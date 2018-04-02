@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>投诉与建议</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="textarea-box">
+    <div class="box">
+      <textarea placeholder="谢谢你提供的宝贵建议：" [(ngModel)]="sContent"></textarea>
+      <div>
+        <span [style.color]="sContent.length>200?'red':''">{{sContent.length}}</span>
+        <span>/200字</span>
+      </div>
+    </div>
+    <dl>
+      <dt>添加照片</dt>
+      <dd *ngFor="let img of Imgs"><img src="data:image/jpeg;base64,{{img.path}}" /></dd>
+      <dd class="addBtn" *ngIf="Imgs.length<1" tappable (click)="addPhoto();"></dd>
+    </dl>
+    <!-- <input type="file" (change)="onChangeSelectFile($event)" multiple>
+        <img [src]="imageUrl"> -->
+    <button ion-button color="danger" tappable (click)='sub();'>保存并提交</button>
+  </div>
+</ion-content>

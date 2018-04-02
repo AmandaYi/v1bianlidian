@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>home_address_gry@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M22,41 C24.836556,41 38,28.836556 38,20 C38,11.163444 30.836556,4 22,4 C13.163444,4 6,11.163444 6,20 C6,28.836556 19.163444,41 22,41 Z" id="path-1"></path>
+        <circle id="path-2" cx="22" cy="19" r="6"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-1495.000000, -396.000000)">
+            <g id="home_address_gry" transform="translate(1495.000000, 396.000000)">
+                <g id="Oval-27">
+                    <use fill-opacity="0" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <path stroke="#353535" stroke-width="2" d="M22,40 C20.9308358,40 17.0062018,36.9275317 13.6872339,33.1533408 C9.57972585,28.4824551 7,23.6737714 7,20 C7,11.7157288 13.7157288,5 22,5 C30.2842712,5 37,11.7157288 37,20 C37,23.6737714 34.4202742,28.4824551 30.3127661,33.1533408 C26.9937982,36.9275317 23.0691642,40 22,40 Z"></path>
+                </g>
+                <g id="Oval-28">
+                    <use fill-opacity="0" fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <circle stroke="#353535" stroke-width="2" cx="22" cy="19" r="5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

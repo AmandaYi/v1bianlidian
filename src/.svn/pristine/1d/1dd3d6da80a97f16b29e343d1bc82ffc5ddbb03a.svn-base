@@ -1,0 +1,14 @@
+<ion-content padding>
+
+  <ul>
+    <li>
+      <img tappable (click)="circle();" alt="" class="close" src="./assets/img/pengyouquan.png" tappable="">
+    </li>
+    <li>
+      <img tappable (click)="friends();" alt="" class="close" src="./assets/img/weixin2.png" tappable="">
+    </li>
+    <li tappable (click)="close();" class="last-child">
+      <img alt="" class="close" src="./assets/img/close_128px.png" tappable="">
+    </li>
+  </ul>
+</ion-content>

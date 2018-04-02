@@ -1,0 +1,71 @@
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { Variable } from "../global/variable";
+import { AppGlobal } from "../AppGlobal";
+import { TabsPage } from "../pages/tabs/tabs";
+import { Ajax } from "./ajax";
+import { AppConfig } from "./app.config";
+import { LocationPage } from "../pages/home/location/location";
+
+@Component({
+  templateUrl: 'app.html'
+})
+export class MyApp {
+  rootPage = TabsPage;
+  // rootPage: any;
+
+  userCode: any;  //用户标示
+  token: any; //用户密钥
+
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    public appGlobal: AppGlobal,
+    private ajax: Ajax,
+  ) {
+    // platform.ready().then(() => {
+    //   statusBar.styleDefault();
+    //   // statusBar.hide();
+    //   splashScreen.hide();
+    //   // (<any>window).navigator.splashscreen.hide(); 
+
+    //   if (localStorage.getItem('firstIn')) {
+    //     this.rootPage = TabsPage;
+    //   } else {
+    //     localStorage.setItem('firstIn', 'true');
+    //     this.rootPage = LocationPage;
+    //   }
+    // });
+
+
+    // setTimeout(() => {
+    //   <any>window.addEventListener("message", (e) => {
+    //     console.log(e.data);
+    //     this.userCode = e.data.token;
+    //     this.token = e.data.userCode
+    //     if (e.source != window.parent) return;
+    //   }, false);
+    //   if (this.userCode && this.token) {
+    //     this.ajax.get(AppConfig.getDebugUrl + '/api/shop/msUser/lmCardLogin?userCode=' + this.userCode + '&userToken=' + this.token + '&userAgent=' + AppConfig.userAgent)
+    //       .toPromise()
+    //       .then(response => {
+    //         if (response.json().code == 200) {
+    //           console.log(response.json().data)
+    //         }
+    //       })
+    //   }
+    // }, 3000);
+
+
+
+
+    Variable.getInstance().isIos = appGlobal.isIos();
+
+  }
+
+
+}

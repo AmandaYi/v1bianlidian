@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>收货地址</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="sa-box content-bg">
+  <dl class="sa-null" *ngIf="addressDatasNull > 0">
+    <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+    <dd>您还没有收货地址，赶快创建吧！</dd>
+  </dl>
+
+  <div class="sa-true" *ngIf="addressDatas > 0">
+
+    <div class="sa-true-list" *ngFor="let al of addressList; let i=index" tappable (click)="bookingAddressChose(al.username,al.mobileno,al.provinceName,al.cityName,al.countyName,al.addressDetail);">
+      <p class="top">
+        <span>地址{{i+1}}</span>
+        <i tappable (click)="delAddess(al.addressId);">
+            <img  src="assets/img/my_modify_del@3x.png" />
+        </i>
+        <i tappable (click)="goToEditaddressPage(al.addressId,al.username,al.mobileno,al.provinceName,al.cityName,al.countyName,al.addressDetail,al.def);">
+            <img  src="assets/img/my_modify_date@3x.png" />
+        </i>
+      </p>
+      <dl>
+        <dt>
+          <p>{{al.username}}</p>
+          <span *ngIf="al.def>0">默认{{al.def}}</span>
+        </dt>
+        <dd>
+          <p>{{al.mobileno}}</p>
+          <p>{{al.provinceName}}{{al.cityName}}{{al.countyName}}</p>
+          <p>{{al.addressDetail}}</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <!--<button ion-button color="danger" [navPush]="pushPage" type="submit">新增收货地址</button>-->
+  <button ion-button color="danger" type="submit" tappable (click)="goToCreateaddressPage();">新增收货地址</button>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>支付完成</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background: #F3F3F3;">
+  <header class="order-top">
+    <img src="assets/img/pay_successful@3x.png" alt="">
+  </header>
+  <section class="order-cen">
+    <dl>
+      <dt>订单编码：</dt>
+      <dd>{{orderno}}</dd>
+    </dl>
+    <dl>
+      <dt>支付方式：</dt>
+      <dd>在线支付</dd>
+    </dl>
+    <!--<dl>
+      <dt>付款时间：</dt>
+      <dd>{{payTime}}</dd>
+    </dl>-->
+    <dl>
+      <dt>收&nbsp;货&nbsp;人&nbsp;：</dt>
+      <dd>{{userName}}</dd>
+    </dl>
+    <dl>
+      <dt>收货地址：</dt>
+      <dd>{{userAddress}}</dd>
+    </dl>
+  </section>
+  <div class="order-payment">
+    <div>
+      <p class="order-payment1">实付款：<b>￥{{paidIn}}</b></p>
+      <!--<p class="order-payment2">含配送费：<b>￥5</b></p>-->
+    </div>
+  </div>
+  <footer class="order-foot">
+    <button ion-button color="danger" outline tappable (click)="details()">订单详情</button>
+    <button ion-button color="dark" outline tappable (click)="homepage()">返回首页</button>
+  </footer>
+</ion-content>

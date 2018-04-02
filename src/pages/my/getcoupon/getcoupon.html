@@ -1,0 +1,106 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>优惠券</ion-title>
+  </ion-navbar>
+  <div class="coupon-box-topbar">
+    <ion-segment [(ngModel)]="getCouponBox">
+      <ion-segment-button value="weishiyong" tappable (click)="weishiyong();">
+        未使用({{status_0}})
+      </ion-segment-button>
+      <ion-segment-button value="yishiyong" tappable (click)="yishiyong();">
+        已使用({{status_1}})
+      </ion-segment-button>
+      <ion-segment-button value="yigouqi" tappable (click)="yigouqi();">
+        已过期({{status_2}})
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-header>
+
+
+<ion-content class="coupon-box content-bg">
+
+
+  <div [ngSwitch]="getCouponBox">
+    <!--//查询未使用-->
+    <div *ngSwitchCase="'weishiyong'">
+      <dl class="co-null" *ngIf="!status_0 > 0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>暂时无优惠券！</dd>
+      </dl>
+      <div *ngIf="status_0 > 0" class="co-list">
+        <div class="co-true" *ngFor="let cl of couponList_0">
+          <dl class="doing">
+            <dt>
+              <div>
+                <span>￥</span>{{cl.couponActivity.amount}}
+              </div>
+              <p>满{{cl.couponActivity.threshold}}可使用</p>
+            </dt>
+            <dd>
+              <p>{{cl.couponActivity.name}}</p>
+              <div>有效期：</div>
+              <span><small>{{cl.lifeStartTime|date:"yyyy-MM-dd"}}</small><b>-</b><small>{{cl.lifeEndTime|date:"yyyy-MM-dd"}}</small></span>
+              <i></i>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!--//查询已使用-->
+    <div *ngSwitchCase="'yishiyong'">
+      <dl class="co-null" *ngIf="!status_1 > 0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>暂时无优惠券！</dd>
+      </dl>
+      <div *ngIf="status_1 > 0" class="co-list">
+        <div class="co-true" *ngFor="let cl of couponList_1">
+          <dl class="doing">
+            <dt>
+              <div>
+                <span>￥</span>{{cl.couponActivity.amount}}
+              </div>
+              <p>满{{cl.couponActivity.threshold}}可使用</p>
+            </dt>
+            <dd>
+              <p>{{cl.couponActivity.name}}</p>
+              <div>有效期：</div>
+              <span><small>{{cl.lifeStartTime|date:"yyyy-MM-dd"}}</small><b>-</b><small>{{cl.lifeEndTime|date:"yyyy-MM-dd"}}</small></span>
+              <i></i>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!--//查询已过期-->
+    <div *ngSwitchCase="'yigouqi'">
+      <dl class="co-null" *ngIf="!status_2 > 0">
+        <dt><img src="assets/img/home_search_empty@3x.png" /></dt>
+        <dd>暂时无优惠券！</dd>
+      </dl>
+      <div *ngIf="status_2 > 0" class="co-list">
+        <div class="co-true" *ngFor="let cl of couponList_2">
+          <dl class="doing">
+            <dt>
+              <div>
+                <span>￥</span>{{cl.couponActivity.amount}}
+              </div>
+              <p>满{{cl.couponActivity.threshold}}可使用</p>
+            </dt>
+            <dd>
+              <p>{{cl.couponActivity.name}}</p>
+              <div>有效期：</div>
+              <span><small>{{cl.lifeStartTime|date:"yyyy-MM-dd"}}</small><b>-</b><small>{{cl.lifeEndTime|date:"yyyy-MM-dd"}}</small></span>
+              <i></i>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

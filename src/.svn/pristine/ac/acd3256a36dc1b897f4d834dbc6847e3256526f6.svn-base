@@ -1,0 +1,11 @@
+page-createadress {
+    // ion-header{
+    //     margin-top: 20px;
+    // } 
+}
+
+#push-button-hidden {
+    button {
+        display: none;
+    }
+}

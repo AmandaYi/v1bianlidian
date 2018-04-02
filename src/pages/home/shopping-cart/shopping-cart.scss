@@ -1,0 +1,181 @@
+// ion-checkbox {
+//     button{
+//         display: none;
+//         z-index: -1;
+//     }
+// }
+shopping-cart {
+  // .checkbox-ios .checkbox-icon {
+  //     width: 1.6rem;
+  //     height: 1.6rem;
+  //     margin-right: 6px;
+  // }
+  // .Shoppingca{
+  //   margin-top: 20px;
+  // }
+  .shopping {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    background: #ffffff;
+    padding: 1rem 12px;
+    margin-top: 20px;
+    .shopping_her {
+      float: left;
+      .Select {
+        float: left;
+        margin-right: 5px;
+      }
+      p {
+        float: left;
+        font-size: 1.4rem;
+        color: #353535;
+        line-height: 22px;
+      }
+    }
+    .shopping_del {
+      float: right;
+      p {
+        font-size: 1.4rem;
+        color: #D73338;
+        line-height: 22px;
+      }
+    }
+  }
+  .List_commodities {
+    width: 100%;
+    overflow: hidden;
+    p.nullShop {
+      background: url(../assets/img/shoppingcart_whenair@3x.png) no-repeat 47% top;
+      background-size: 5rem 5rem;
+      height: 6rem;
+      line-height: 6rem;
+      box-sizing: content-box;
+      text-align: center;
+      padding: 3rem 0;
+      margin-top: 3rem;
+      color: #666;
+    }
+    .List_commoditiesD {
+      display: flex;
+      border-bottom: 1px solid #D8D8D8;
+      padding: 12px;
+      background: #fff;
+      .List_commoditiesD1 {
+        margin-right: 3px;
+        ion-checkbox {
+          margin-top: 25px;
+        }
+      }
+      .List_commoditiesD2 {
+        width: 20%;
+        margin-top: 1rem;
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
+      .List_commoditiesD3 {
+        position: relative;
+        width: 70%;
+        padding-left: 6px;
+        p {
+          margin: 0;
+          b {
+            font-size: 1rem;
+            font-weight: normal;
+            margin-left: 3px;
+          }
+        }
+        p:nth-child(1) {
+          font-size: 1.4rem;
+          color: #000;
+          font-weight: bold;
+        }
+        p:nth-child(2) {
+          font-size: 1.2rem;
+          color: #666;
+          padding: 6px 0;
+        }
+        p:nth-child(3) {
+          font-size: 1.6rem;
+          color: #D72227;
+          font-weight: bold;
+        }
+      }
+      .List_commoditiesD4 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        .List_commoditiesD4-Key {
+          span {
+            display: inline-block;
+            padding: 0 5px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            font-size: 1.6rem;
+            line-height: 1.8rem;
+            float: left;
+          }
+          ion-icon {
+            float: left;
+            font-size: 2.4rem;
+          }
+        }
+      }
+    }
+  }
+  .Settlement {
+    width: 100%;
+    display: flex;
+    height: 4.5rem;
+    background: #F4F4F4;
+    overflow: hidden;
+    margin: 0;
+    border-top: 0.55px solid rgba(0, 0, 0, 0.05);
+    .Settlement1 {
+      flex: 4;
+      line-height: 4.5rem;
+      box-sizing: border-box;
+      padding-left: 12px;
+      p {
+        color: #353535;
+        font-size: 1.2rem;
+        display: inline-block;
+        b {
+          padding: 0 3px;
+        }
+      }
+    }
+    .Settlement2 {
+      flex: 10;
+      line-height: 4.5rem;
+      text-align: right;
+      box-sizing: border-box;
+      padding-right: 5px;
+      p {
+        color: #353535;
+        font-size: 1.4rem;
+        display: inline-block;
+        b {
+          color: #D72227;
+        }
+      }
+    }
+    .Settlement3 {
+      flex: 6;
+      line-height: 4.5rem;
+      background: #D72227;
+      p {
+        color: #ffffff;
+        font-size: 1.6rem;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+  }
+  .change {
+    color: red;
+    background: red;
+  }
+}

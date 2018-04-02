@@ -1,0 +1,196 @@
+import { Component } from '@angular/core';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { CreateaddressPage } from "./createaddress/createaddress";
+import { Http } from "@angular/http";
+import { AppConfig } from "../../../app/app.config";
+import { EditaddressPage } from "./editaddress/editaddress";
+import { Variable } from "../../../global/variable";
+import { AppGlobal } from "../../../AppGlobal";
+
+
+@Component({
+  selector: 'page-shippingaddress',
+  templateUrl: 'shippingaddress.html'
+})
+export class ShippingaddressPage {
+  show: boolean = true;
+  // pushPage: typeof CreateaddressPage;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public http: Http,
+    private toastCtrl: ToastController,
+    public appGlobal: AppGlobal,
+    public alertCtrl: AlertController
+  ) {
+    //进入页面加载处理
+    this.appGlobal.showLoading();
+
+    this.count = navParams.get('adds');
+  }
+
+  count: number;
+  userId: any;
+  tokenId: any;
+  addressList: any;
+  addressDatas: any;//收货地址有数据
+  addressDatasNull: any;//收货地址无数据
+  userAgent: string;
+  // addressAreaData: any;//获取高德省市区
+
+  ionViewWillEnter() {
+    this.userId = localStorage.getItem('userId');
+    this.tokenId = localStorage.getItem('tokenId');
+    this.userAgent = localStorage.getItem('userAgent');
+    this.getAdr();
+
+  }
+
+  getAdr() {
+    //获取收货地址
+    this.http.get(AppConfig.getDebugUrl + '/api/shop/address/msAddress/search?eq_passId=' + this.userId + '&&tokenid=' + this.tokenId+ '&userAgent=' + this.userAgent)
+      .toPromise()
+      .then(response => {
+
+        this.addressList = response.json();
+        sessionStorage.setItem('addressId', response.json().addressId);
+        if (response.json().length > 0) {
+          this.addressDatas = 1;
+          this.addressDatasNull = 0;
+        } else {
+          this.addressDatas = 0;
+          this.addressDatasNull = 1;
+        }
+        console.log(response.json());
+      })
+      .catch(this.ttError);
+  }
+
+  //删除收货地址
+  delAddess(addressId: any) {
+
+    //防止多次点击
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//一秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 1000);
+    }
+    this.alertCtrl.create({
+      title: '确认要删除该地址？',
+      buttons: [{ text: '取消' },
+      {
+        text: '确定',
+        handler: () => {
+          this.http.get(AppConfig.getDebugUrl + '/api/shop/address/msAddress/delete?eq_addressId=' + addressId + '&&eq_passId=' + this.userId)
+            .toPromise()
+            .then(response => {
+              if (response.json().code == 200) {
+                let toast = this.toastCtrl.create({
+                  message: response.json().message,
+                  duration: 1500,
+                  position: 'top'
+                });
+                toast.present();
+                this.getAdr()
+
+              } else {
+                let toast = this.toastCtrl.create({
+                  message: response.json().message,
+                  duration: 1500,
+                  position: 'top'
+                });
+                toast.present();
+              }
+            })
+        }
+      }
+      ]
+    }).present();
+
+  }
+
+
+  //进入创建收货地址页面
+  goToCreateaddressPage() {
+    this.navCtrl.push(CreateaddressPage);
+  }
+
+  //进入修改收货地址页面
+  goToEditaddressPage(
+    addressId: any,
+    username: any,
+    mobileno: any,
+    provinceName: any,
+    cityName: any,
+    countyName: any,
+    addressDetail: any,
+    def: any
+  ) {
+
+    //防止多次点击
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//一秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 1000);
+    }
+
+    this.navCtrl.push(EditaddressPage, {
+      eAddressId: addressId,
+      eName: username,
+      eMobileno: mobileno,
+      eAddressDetail: addressDetail,
+      eProvinceName: provinceName,
+      eCityName: cityName,
+      eCountyName: countyName,
+      eDef: def
+    });
+  }
+
+
+
+  //订单收货地址切换
+  bookingAddressChose(
+    username: any,
+    mobileno: any,
+    provinceName: any,
+    cityName: any,
+    countyName: any,
+    addressDetail: any
+  ) {
+
+    //防止多次点击
+    if (Variable.getInstance().click_flag == false) {
+      return;
+    } else {
+      Variable.getInstance().click_flag = false;
+      setTimeout(() => {//一秒后又可以点击
+        Variable.getInstance().click_flag = true;
+      }, 1000);
+    }
+
+    if (this.count === 1) {
+      let BookingAddress = { username, mobileno, provinceName, cityName, countyName, addressDetail }
+      Variable.getInstance().BookingAddress = BookingAddress;
+
+      Variable.getInstance().adds = 2;
+      console.log(Variable.getInstance().BookingAddress);
+
+      this.navCtrl.pop();
+    } else {
+      return null;
+    }
+  }
+
+
+  private ttError(error: any) {
+    console.error('An error occurred', error); // for demo purposes only
+  }
+
+}
